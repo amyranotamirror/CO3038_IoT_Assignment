@@ -1,0 +1,2 @@
+D:/HCMUT/KNOWLEDGE/Github/HCMUT/Team/CO3038_IoT_Assignment/build/CMakeFiles/edit_cache.dir
+D:/HCMUT/KNOWLEDGE/Github/HCMUT/Team/CO3038_IoT_Assignment/build/CMakeFiles/rebuild_cache.dir
