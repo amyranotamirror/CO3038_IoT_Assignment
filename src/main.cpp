@@ -2,6 +2,7 @@
 
 #include "task/network/task_wifi.h"
 #include "task/network/task_thingsboard.h"
+#include "task/ota/task_ota.h"
 
 void TaskTest(void *pvParameters) {
   while(1) {
@@ -23,6 +24,7 @@ void setup() {
   xTaskCreate(TaskWiFi, "WiFi", 2048, NULL, 2, NULL);
   xTaskCreate(TaskThingsBoard, "ThingsBoard", 2048, NULL, 2, NULL);
   xTaskCreate(TaskTest, "Test", 2048, NULL, 2, NULL);
+  xTaskCreate(TaskOTAUpdate, "OTAupdate", 4096U, NULL, 1, NULL);
 }
 
 void loop() {}
