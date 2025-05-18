@@ -1,24 +1,28 @@
-#include <Arduino.h>
-#include <Wire.h>
-#include <WiFi.h>
-#include "DHT20.h"
-#include <Arduino_MQTT_Client.h>
-#include <ThingsBoard.h>
-#include <ArduinoOTA.h>
+#include <HardwareSerial.h>
 
-// put function declarations here:
-int myFunction(int, int);
+#include "task/network/task_wifi.h"
+#include "task/network/task_thingsboard.h"
+
+void TaskTest(void *pvParameters) {
+  while(1) {
+    double temperature = 1.0;
+    Serial.print("Temperature: "); Serial.print(temperature); Serial.println(" *C");
+    thingsboard.sendTelemetryData("temperature", temperature);
+    vTaskDelay(3000);
+  }
+}
 
 void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+  // something
+  Serial.begin(9600UL);
+  Serial.println();
+  // something
+  InitWiFi();
+  InitThingsBoard();
+  // something
+  xTaskCreate(TaskWiFi, "WiFi", 2048, NULL, 2, NULL);
+  xTaskCreate(TaskThingsBoard, "ThingsBoard", 2048, NULL, 2, NULL);
+  xTaskCreate(TaskTest, "Test", 2048, NULL, 2, NULL);
 }
 
-void loop() {
-  // put your main code here, to run repeatedly:
-}
-
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
-}
+void loop() {}
