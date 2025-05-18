@@ -1,7 +1,7 @@
 #include "task_thingsboard.h"
 
 Arduino_MQTT_Client mqttClient(wifiClient);
-ThingsBoard thingsboard(mqttClient, MessageConfig::maxMessageReceiveSize, MessageConfig::maxMessageSendSize, Default_Max_Stack_Size);
+ThingsBoard thingsboard(mqttClient, MessageConfig::maxMessageReceiveSize, MessageConfig::maxMessageSendSize, Default_Max_Stack_Size, apis);
 
 void InitThingsBoard() {
   Serial.print("Connecting to ThingsBoard ...");
