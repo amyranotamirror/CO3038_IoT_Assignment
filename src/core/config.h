@@ -37,8 +37,8 @@ struct TelemetryConfig {
     static constexpr uint64_t requestTimeoutMicroseconds = 10000U * 1000U;
 };
 struct OTAConfig {
-    static constexpr char firmwareTitle[] = "SMART_OFFICE";
-    static constexpr char firmwareVersion[] = "1.0";
+    static constexpr const char* server = "SMART_OFFICE";
+    static constexpr const char* server = "1.0";
     static constexpr uint8_t maxFailureAttempt = 12U;
     static constexpr uint16_t firmwarePacketSize = 4096U;
     // Timing
@@ -46,11 +46,11 @@ struct OTAConfig {
 };
 
 struct SensorConfig {
-    static constexpr char temperatureKey[] = "temperature";
-    static constexpr char humidityKey[] = "humidity";
-    static constexpr char brightnessKey[] = "brightness";
-    static constexpr char motionKey[] = "motion";
-    static constexpr char co2Key[] = "co2";
+    static constexpr const char* temperatureKey = "temperature";
+    static constexpr const char* humidityKey = "humidity";
+    static constexpr const char* brightnessKey = "brightness";
+    static constexpr const char* motionKey = "motion";
+    static constexpr const char* co2Key = "co2";
 
     static constexpr uint16_t maxConnectionAttemptDHT20 = 20U;
     static constexpr uint16_t maxConnectionAttemptLD2410 = 20U;
@@ -69,9 +69,9 @@ struct SensorConfig {
 };
 
 struct ActuatorConfig {
-    static constexpr char lightingKey[] = "lighting";
-    static constexpr char curtainKey[] = "curtain";
-    static constexpr char buzzerKey[] = "buzzer";
-    static constexpr char indicatorLightKey[] = "indicator";
+    static constexpr const char* lightingKey = "lighting";
+    static constexpr const char* curtainKey = "curtain";
+    static constexpr const char* buzzerKey = "buzzer";
+    static constexpr const char* indicatorLightKey = "indicator";
 };
 #endif
