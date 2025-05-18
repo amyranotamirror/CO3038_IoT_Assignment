@@ -1,5 +1,6 @@
 #ifndef CONFIG_H
 #define CONFIG_H
+
 #include <cstdint>
 
 struct SystemConfig {
@@ -25,8 +26,9 @@ struct MessageConfig {
 
 struct ThingsBoardConfig {
     static constexpr const char* server = "app.coreiot.io";
-    static constexpr const char* token = "DMeXarEe7JJzQKBEMwYC";
+    static constexpr const char* token = "RkEY4A6IJfeh3DZywVF5"; // DMeXarEe7JJzQKBEMwYC
     static constexpr uint16_t port = 1883U; 
+    static constexpr uint8_t maxAttribute = 2U;
     // Timing
     static constexpr uint32_t reconnectInterval = SystemConfig::defaultTaskDelay * 5;
     static constexpr uint32_t connectionAttemptInterval = SystemConfig::smallTaskDelay;
@@ -34,15 +36,15 @@ struct ThingsBoardConfig {
 struct TelemetryConfig {
     // Timing
     static constexpr uint32_t sendInterval = 10000U;
-    static constexpr uint64_t requestTimeoutMicroseconds = 10000U * 1000U;
 };
 struct OTAConfig {
-    static constexpr const char* server = "SMART_OFFICE";
-    static constexpr const char* server = "1.0";
+    static constexpr const char* title = "SMART_OFFICE";
+    static constexpr const char* version = "1.0";
     static constexpr uint8_t maxFailureAttempt = 12U;
     static constexpr uint16_t firmwarePacketSize = 4096U;
     // Timing
     static constexpr uint32_t otaUpdateInterval = SystemConfig::defaultTaskDelay * 5;
+    static constexpr uint64_t requestTimeoutMicroseconds = 10000U * 1000U;
 };
 
 struct SensorConfig {
@@ -74,4 +76,5 @@ struct ActuatorConfig {
     static constexpr const char* buzzerKey = "buzzer";
     static constexpr const char* indicatorLightKey = "indicator";
 };
+
 #endif

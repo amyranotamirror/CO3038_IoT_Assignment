@@ -7,6 +7,7 @@
 #include <WiFi.h>
 
 #include "task_wifi.h"
+#include "./task/ota/task_ota.h"
 #include "./core/config.h"
 
 extern Arduino_MQTT_Client mqttClient;
