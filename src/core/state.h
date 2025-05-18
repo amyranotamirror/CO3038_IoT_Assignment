@@ -1,6 +1,9 @@
 #ifndef STATE_H
 #define STATE_H
 
+#include <cstdint>
+#include <cmath>
+
 struct WiFiState {
     bool isConnected = false;
     bool isAttempting = false;

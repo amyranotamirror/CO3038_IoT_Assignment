@@ -1,5 +1,6 @@
 #ifndef CONFIG_H
 #define CONFIG_H
+
 #include <cstdint>
 
 struct SystemConfig {
@@ -38,7 +39,7 @@ struct TelemetryConfig {
 };
 struct OTAConfig {
     static constexpr const char* server = "SMART_OFFICE";
-    static constexpr const char* server = "1.0";
+    static constexpr const char* version = "1.0";
     static constexpr uint8_t maxFailureAttempt = 12U;
     static constexpr uint16_t firmwarePacketSize = 4096U;
     // Timing
@@ -74,4 +75,5 @@ struct ActuatorConfig {
     static constexpr const char* buzzerKey = "buzzer";
     static constexpr const char* indicatorLightKey = "indicator";
 };
+
 #endif
