@@ -5,11 +5,11 @@ ThingsBoard thingsboard(mqttClient, 512U, 512U, Default_Max_Stack_Size);
 
 void InitThingsBoard() {
   Serial.print("Connecting to ThingsBoard ...");
-  thingsboard.connect("app.coreiot.io", "DMeXarEe7JJzQKBEMwYC", 1883U);
+  thingsboard.connect(ThingsBoardConfig::server, ThingsBoardConfig::token, ThingsBoardConfig::port);
   while (!thingsboard.connected()) {
-    delay(500);
+    delay(ThingsBoardConfig::connectionAttemptInterval);
     Serial.print(".");
-    thingsboard.connect("app.coreiot.io", "DMeXarEe7JJzQKBEMwYC", 1883U);
+    thingsboard.connect(ThingsBoardConfig::server, ThingsBoardConfig::token, ThingsBoardConfig::port);
   }
   Serial.println(); Serial.println("Connected to ThingsBoard!");
 }
@@ -20,6 +20,6 @@ void TaskThingsBoard(void *pvParameters) {
       Serial.println("ThingsBoard disconnected, attempting to reconnect ...");
       InitThingsBoard();
     }
-    vTaskDelay(5000);
+    vTaskDelay(ThingsBoardConfig::reconnectInterval);
   }
 }

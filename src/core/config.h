@@ -1,27 +1,39 @@
-#pragma once
+#ifndef CONFIG_H
+#define CONFIG_H
 #include <cstdint>
 
 struct SystemConfig {
     static constexpr uint32_t serialDebugBaud = 115200U;
     // Timing
+    static constexpr uint32_t smallTaskDelay = 500U;
     static constexpr uint32_t defaultTaskDelay = 1000U;
     static constexpr uint32_t mutexWaitTicks = 100U;
 };
 struct WiFiConfig {
+    static constexpr const char* wifiSSID = "AN COFFEE";
+    static constexpr const char* wifiPassword = "Ancoffeexinchao";
     static constexpr uint16_t maxConnectionAttempt = 20U;
     //Timing
-    static constexpr uint32_t reconnectInterval = SystemConfig::defaultTaskDelay;
-    static constexpr uint32_t connectionAttemptInterval = 250U;
+    static constexpr uint32_t reconnectInterval = SystemConfig::defaultTaskDelay * 5;
+    static constexpr uint32_t connectionAttemptInterval = SystemConfig::smallTaskDelay;
 };
 struct MessageConfig {
     static constexpr uint16_t maxMessageSendSize = 512U;
     static constexpr uint16_t maxMessageReceiveSize = 512U;
     static constexpr uint8_t maxAttributes = 2U;
 };
+
+struct ThingsBoardConfig {
+    static constexpr const char* server = "app.coreiot.io";
+    static constexpr const char* token = "DMeXarEe7JJzQKBEMwYC";
+    static constexpr uint16_t port = 1883U; 
+    // Timing
+    static constexpr uint32_t reconnectInterval = SystemConfig::defaultTaskDelay * 5;
+    static constexpr uint32_t connectionAttemptInterval = SystemConfig::smallTaskDelay;
+};
 struct TelemetryConfig {
     // Timing
     static constexpr uint32_t sendInterval = 10000U;
-    static constexpr uint32_t serverCheckInterval = 1000U;
     static constexpr uint64_t requestTimeoutMicroseconds = 10000U * 1000U;
 };
 struct OTAConfig {
@@ -60,4 +72,6 @@ struct ActuatorConfig {
     static constexpr char lightingKey[] = "lighting";
     static constexpr char curtainKey[] = "curtain";
     static constexpr char buzzerKey[] = "buzzer";
+    static constexpr char indicatorLightKey[] = "indicator";
 };
+#endif

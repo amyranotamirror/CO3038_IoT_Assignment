@@ -4,9 +4,9 @@ WiFiClient wifiClient;
 
 void InitWiFi() {
   Serial.print("Connecting to WiFi ...");
-  WiFi.begin("AN COFFEE", "Ancoffeexinchao");
+  WiFi.begin(WiFiConfig::wifiSSID, WiFiConfig::wifiPassword);
   while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
+    delay(WiFiConfig::connectionAttemptInterval);
     Serial.print(".");
   }
   Serial.println(); Serial.println("Connected to WiFi!");
@@ -18,6 +18,6 @@ void TaskWiFi(void *pvParameters) {
       Serial.println("WiFi disconnected, attempting to reconnect ...");
       InitWiFi();
     }
-    vTaskDelay(5000);
+    vTaskDelay(WiFiConfig::reconnectInterval);
   }
 }

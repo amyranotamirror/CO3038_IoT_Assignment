@@ -7,6 +7,7 @@
 #include <WiFi.h>
 
 #include "task_wifi.h"
+#include "./core/config.h"
 
 extern Arduino_MQTT_Client mqttClient;
 extern ThingsBoard thingsboard;

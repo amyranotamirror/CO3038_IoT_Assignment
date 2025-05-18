@@ -3,6 +3,7 @@
 
 #include <HardwareSerial.h>
 #include <WiFi.h>
+#include "./core/config.h"
 
 extern WiFiClient wifiClient;
 
