@@ -10,6 +10,6 @@
 void InitLight();
 
 // RPC handler for toggling light
-RPC_Response handleLightToggle(const RPC_Data &data);
+RPC_Response RPCLightActuatorControl(const RPC_Data &data);
 
 #endif

@@ -11,11 +11,12 @@
 #include "task/sensors/task_temp_humid_sensor.h"
 #include "task/actuators/task_light.h"
 
+void TaskTest(void *pvParameters);
 void InitSystem(){
   // Init connection
   InitWiFi();
   InitThingsBoard();
-  InitRPC();
+  // InitRPC();
 
   // Init actuators
   InitLight();
@@ -53,6 +54,6 @@ void setup() {
 
 void loop() {
   thingsboard.loop();
-  RPCLightActuatorControl(!lightActuatorState.status);
+  // RPCLightActuatorControl(!lightActuatorState.status);
   vTaskDelay(pdMS_TO_TICKS(SystemConfig::defaultTaskDelay));
 }

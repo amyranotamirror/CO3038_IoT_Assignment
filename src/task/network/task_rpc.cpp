@@ -1,10 +1,10 @@
 #include "task_rpc.h"
 
-std::vector<RPC_Callback> rpc_callbacks = {
-    // RPC_Callback{ "toggleLight", handleLightToggle },
+const std::array<RPC_Callback, 1U> callbacks = {
+    RPC_Callback{ "RPCLightActuatorControl", RPCLightActuatorControl }
     // RPC_Callback{ "controlAircon", handleAirconCommand }
 };
 
-void initRPC(ThingsBoard &tb) {
-  tb.RPC_Subscribe(rpc_callbacks.begin(), rpc_callbacks.end());
+void InitRPC() {
+  thingsboard.RPC_Subscribe(callbacks.cbegin(), callbacks.cend());
 }
