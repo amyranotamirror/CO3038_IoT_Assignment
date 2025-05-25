@@ -4,7 +4,7 @@
 #include <cstdint>
 
 struct SystemConfig {
-    static constexpr uint32_t serialDebugBaud = 115200U;
+    static constexpr uint32_t serialDebugBaud = 9600U;
     // Timing
     static constexpr uint32_t smallTaskDelay = 500U;
     static constexpr uint32_t defaultTaskDelay = 1000U;
@@ -80,6 +80,8 @@ struct ActuatorConfig {
     static constexpr const char* curtainKey = "curtain";
     static constexpr const char* buzzerKey = "buzzer";
     static constexpr const char* indicatorLightKey = "indicator";
+
+    static constexpr uint16_t lightPin = GPIO_NUM_13;
 };
 
 #endif
