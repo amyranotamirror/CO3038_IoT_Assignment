@@ -18,6 +18,7 @@ void TaskOTAUpdate(void *pvParameters) {
             // Send update request
             if(!otaUpdateState.updateRequestSent) {
                 Serial.print(OTAConfig::title);
+                Serial.print(" ");
                 Serial.println(OTAConfig::version);
                 Serial.println("[UPDATE] OTA Update: Firmware Update ...");
                 // Start updating
@@ -38,7 +39,6 @@ void TaskOTAUpdate(void *pvParameters) {
                 }
             }
         }
-        thingsboard.loop();
         vTaskDelay(pdMS_TO_TICKS(OTAConfig::otaUpdateInterval));
     }
 }
