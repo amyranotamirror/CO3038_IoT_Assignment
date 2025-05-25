@@ -4,6 +4,8 @@
 #include <cstdint>
 #include <cmath>
 
+#define ON 1
+#define OFF 0
 struct {
     bool isConnected = false;
     bool isAttempting = false;
@@ -36,5 +38,9 @@ struct {
     uint16_t connectionAttempt = 0;     // Refer SensorConfig::maxConnectionAttemptLD2410
     double motionDetected = NAN;
 } motionSensorState;
+
+struct {
+    bool status = ON;
+} lightActuatorState;
 
 #endif
