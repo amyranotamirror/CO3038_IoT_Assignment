@@ -30,11 +30,14 @@ void setup() {
   lightSensor.begin();
 
   // something
-  xTaskCreate(TaskWiFi, "WiFi", 2048, NULL, 2, NULL);
-  xTaskCreate(TaskThingsBoard, "ThingsBoard", 2048, NULL, 2, NULL);
-  xTaskCreate(TaskLightSensor, "LightSensor", 2048, NULL, 2, NULL);
-  xTaskCreate(TaskTest, "Test", 2048, NULL, 2, NULL);
+  xTaskCreate(TaskLightSensor, "LightSensor", 2048U, NULL, 2, NULL);
+  xTaskCreate(TaskWiFi, "WiFi", 4096U, NULL, 2, NULL);
+  xTaskCreate(TaskThingsBoard, "ThingsBoard", 4096U, NULL, 2, NULL);
+  xTaskCreate(TaskTest, "Test", 2048U, NULL, 2, NULL);
   xTaskCreate(TaskOTAUpdate, "OTAupdate", 4096U, NULL, 1, NULL);
 }
 
-void loop() {}
+void loop() {
+  thingsboard.loop();
+  vTaskDelay(pdMS_TO_TICKS(SystemConfig::defaultTaskDelay));
+}

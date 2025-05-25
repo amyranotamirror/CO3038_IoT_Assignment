@@ -11,8 +11,13 @@ struct SystemConfig {
     static constexpr uint32_t mutexWaitTicks = 100U;
 };
 struct WiFiConfig {
-    static constexpr const char* wifiSSID = "AN COFFEE";
-    static constexpr const char* wifiPassword = "Ancoffeexinchao";
+    // Amyra 2.4GHz WiFi
+    static constexpr const char* wifiSSID = "AMYRANGUYEN 2995";
+    static constexpr const char* wifiPassword = "@s0T5278";
+    // Khải 2.4GHz WiFi
+    // static constexpr const char* wifiSSID = "AMYRANGUYEN 2995";
+    // static constexpr const char* wifiPassword = "@s0T5278";
+
     static constexpr uint16_t maxConnectionAttempt = 20U;
     //Timing
     static constexpr uint32_t reconnectInterval = SystemConfig::defaultTaskDelay * 5;
