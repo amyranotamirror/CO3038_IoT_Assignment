@@ -2,8 +2,8 @@
 #define RPC_HANDLER_H
 
 #include <ThingsBoard.h>
-#include <vector>
 
+#include "../network/task_thingsboard.h"
 #include "../actuators/task_air_cond.h"
 #include "../actuators/task_buzzer.h"
 #include "../actuators/task_curtain.h"
@@ -11,9 +11,9 @@
 #include "../actuators/task_relay.h"
 
 // Define your ThingsBoard RPC callback type
-extern std::vector<RPC_Callback> rpc_callbacks;
+extern const std::array<RPC_Callback, 1U> callbacks;
 
 // Initializes and subscribes RPCs with ThingsBoard
-void InitRPC(ThingsBoard &tb);
+void InitRPC();
 
 #endif
