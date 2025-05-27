@@ -4,6 +4,8 @@
 #include <cstdint>
 #include <cmath>
 
+#define ON 1
+#define OFF 0
 struct {
     bool isConnected = false;
     bool isAttempting = false;
@@ -37,4 +39,7 @@ struct {
     double motionDetected = NAN;
 } motionSensorState;
 
+struct {
+    bool status = ON;
+} buzzerState;
 #endif

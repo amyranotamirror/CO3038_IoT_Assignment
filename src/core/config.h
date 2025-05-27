@@ -80,6 +80,8 @@ struct ActuatorConfig {
     static constexpr const char* curtainKey = "curtain";
     static constexpr const char* buzzerKey = "buzzer";
     static constexpr const char* indicatorLightKey = "indicator";
+
+    static constexpr uint8_t buzzerPin = GPIO_NUM_13;
 };
 
 #endif

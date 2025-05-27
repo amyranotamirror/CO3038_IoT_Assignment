@@ -8,6 +8,7 @@
 #include "task/sensors/task_motion_sensor.h"
 #include "task/sensors/task_temp_humid_sensor.h"
 #include "task/ota/task_ota.h"
+#include "task/actuators/task_buzzer.h"
 
 void TaskTest(void *pvParameters) {
   while(1) {
@@ -27,6 +28,7 @@ void setup() {
   // something
   InitWiFi();
   InitThingsBoard();
+  InitBuzzer();
   lightSensor.begin();
 
   // something
@@ -35,6 +37,8 @@ void setup() {
   xTaskCreate(TaskThingsBoard, "ThingsBoard", 4096U, NULL, 2, NULL);
   xTaskCreate(TaskTest, "Test", 2048U, NULL, 2, NULL);
   xTaskCreate(TaskOTAUpdate, "OTAupdate", 4096U, NULL, 1, NULL);
+  xTaskCreate(TaskBuzzer, "Buzzer", 2048U, NULL, 2, NULL);
+
 }
 
 void loop() {
