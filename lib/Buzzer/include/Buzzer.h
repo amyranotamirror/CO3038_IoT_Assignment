@@ -45,7 +45,7 @@
 #define A5_NOTE_FREQ (880)
 #define B5_NOTE_FREQ (987)
 
-#define MELODY_NOTE_MAX_NB (3)
+#define MELODY_NOTE_MAX_NB (8)
 
 class Buzzer {
   public:
