@@ -4,7 +4,7 @@
 #include <cstdint>
 
 struct SystemConfig {
-    static constexpr uint32_t serialDebugBaud = 115200U;
+    static constexpr uint32_t serialDebugBaud = 9600U;
     // Timing
     static constexpr uint32_t smallTaskDelay = 500U;
     static constexpr uint32_t defaultTaskDelay = 1000U;
@@ -12,11 +12,11 @@ struct SystemConfig {
 };
 struct WiFiConfig {
     // Amyra 2.4GHz WiFi
-    static constexpr const char* wifiSSID = "AMYRANGUYEN 2995";
-    static constexpr const char* wifiPassword = "@s0T5278";
-    // Khải 2.4GHz WiFi
     // static constexpr const char* wifiSSID = "AMYRANGUYEN 2995";
     // static constexpr const char* wifiPassword = "@s0T5278";
+    // Harw 2.4GHz WiFi
+    static constexpr const char* wifiSSID = "NhatKhai";
+    static constexpr const char* wifiPassword = "baohan1107";
 
     static constexpr uint16_t maxConnectionAttempt = 20U;
     //Timing
@@ -30,8 +30,12 @@ struct MessageConfig {
 };
 
 struct ThingsBoardConfig {
+    // Token
+    // static constexpr const char* token = "RkEY4A6IJfeh3DZywVF5"; // 
+    // static constexpr const char* token = "DMeXarEe7JJzQKBEMwYC"; // khai.nguyen352528@hcmut.edu.vn IOT_DEVICE_1
+    static constexpr const char* token = "nHGoWU4pTWs8Df95Nlq0"; // khai.nguyen352528@hcmut.edu.vn IOT_DEVICE_3
+    // Server
     static constexpr const char* server = "app.coreiot.io";
-    static constexpr const char* token = "RkEY4A6IJfeh3DZywVF5"; // DMeXarEe7JJzQKBEMwYC
     static constexpr uint16_t port = 1883U; 
     static constexpr uint8_t maxAttribute = 2U;
     // Timing
@@ -81,6 +85,7 @@ struct ActuatorConfig {
     static constexpr const char* buzzerKey = "buzzer";
     static constexpr const char* indicatorLightKey = "indicator";
 
+    static constexpr uint16_t lightPin = GPIO_NUM_2;
     static constexpr uint8_t buzzerPin = GPIO_NUM_13;
 };
 

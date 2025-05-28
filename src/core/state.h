@@ -42,4 +42,9 @@ struct {
 struct {
     bool status = ON;
 } buzzerState;
+
+struct {
+    bool status = ON;
+} lightActuatorState;
+
 #endif
