@@ -3,7 +3,9 @@
 
 #include <HardwareSerial.h>
 #include <BH1750.h>
+
 #include "./core/config.h"
+#include "./core/state.h"
 
 extern BH1750 lightSensor;
 
