@@ -86,6 +86,7 @@ struct ActuatorConfig {
     static constexpr const char* indicatorLightKey = "indicator";
 
     static constexpr uint16_t lightPin = GPIO_NUM_2;
+    static constexpr uint8_t buzzerPin = GPIO_NUM_13;
 };
 
 #endif

@@ -1,6 +1,7 @@
 #include "task_light.h"
 
 void InitLight(){
+    lightSensor.begin();
     pinMode(ActuatorConfig::lightPin, OUTPUT);
     digitalWrite(ActuatorConfig::lightPin, true);
 }
