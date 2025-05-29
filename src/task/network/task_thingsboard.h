@@ -3,6 +3,7 @@
 
 #include <Arduino_MQTT_Client.h>
 #include <Attribute_Request.h>
+#include <Client_Side_RPC.h>
 #include <HardwareSerial.h>
 #include <OTA_Firmware_Update.h>
 #include <Server_Side_RPC.h>
@@ -15,11 +16,12 @@
 #include "task_wifi.h"
 #include "./core/config.h"
 
+extern Client_Side_RPC<1U, 2U> client_rpc;
 extern Server_Side_RPC<1U, 0U> server_rpc;
 extern Shared_Attribute_Update<1U, ThingsBoardConfig::maxAttribute> attr_update;
 extern Attribute_Request<1U, ThingsBoardConfig::maxAttribute> attr_request;
 extern OTA_Firmware_Update<> ota;
-extern const std::array<IAPI_Implementation*, 4U> apis;
+extern const std::array<IAPI_Implementation*, 5U> apis;
 
 extern Arduino_MQTT_Client mqttClient;
 extern ThingsBoard thingsboard;

@@ -1,10 +1,11 @@
 #include "task_thingsboard.h"
 
+Client_Side_RPC<1U, 2U> client_rpc;
 Server_Side_RPC<1U, 0U> server_rpc;
 Shared_Attribute_Update<1U, ThingsBoardConfig::maxAttribute> attr_update;
 Attribute_Request<1U, ThingsBoardConfig::maxAttribute> attr_request;
 OTA_Firmware_Update<> ota;
-const std::array<IAPI_Implementation*, 4U> apis = {&server_rpc, &attr_update, &attr_request, &ota};
+const std::array<IAPI_Implementation*, 5U> apis = {&client_rpc, &server_rpc, &attr_update, &attr_request, &ota};
 
 Arduino_MQTT_Client mqttClient(wifiClient);
 ThingsBoard thingsboard(mqttClient, MessageConfig::maxMessageReceiveSize, MessageConfig::maxMessageSendSize, Default_Max_Stack_Size, apis);
@@ -39,10 +40,10 @@ void TaskThingsBoard(void *pvParameters) {
             thingsBoardState.isSharedAttributesUpdated = attr_update.Shared_Attributes_Subscribe(shared_attribute_callback);
             Serial.print("[INFO] Shared attributes updated: "); Serial.println(thingsBoardState.isSharedAttributesUpdated ? "succeeded" : "failed");
           }
-          if (!thingsBoardState.isSharedAttributesRequested) {
-            thingsBoardState.isSharedAttributesRequested = attr_request.Shared_Attributes_Request(attribute_request_callback);
-            Serial.print("[INFO] Shared attributes requested: "); Serial.println(thingsBoardState.isSharedAttributesRequested ? "succeeded" : "failed");
-          }
+          // if (!thingsBoardState.isSharedAttributesRequested) {
+          //   thingsBoardState.isSharedAttributesRequested = attr_request.Shared_Attributes_Request(attribute_request_callback);
+          //   Serial.print("[INFO] Shared attributes requested: "); Serial.println(thingsBoardState.isSharedAttributesRequested ? "succeeded" : "failed");
+          // }
         }
         thingsBoardState.isConnected = true;
         thingsBoardState.isAttempting = false;

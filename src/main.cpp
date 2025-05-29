@@ -35,11 +35,10 @@ void InitSystem(){
   xTaskCreate(TaskWiFi, "WiFi", 4096U, NULL, 2, NULL);
   xTaskCreate(TaskThingsBoard, "ThingsBoard", 4096U, NULL, 2, NULL);
   xTaskCreate(TaskThingsBoardLoop, "ThingsBoardLoop", 4096U, NULL, 2, NULL);
+  xTaskCreate(TaskOTAUpdate, "OTAUpdate", 4096U, NULL, 1, NULL);
 
-  // xTaskCreate(TaskLightSensor, "LightSensor", 4096U, NULL, 2, NULL);
-  
+  xTaskCreate(TaskLightSensor, "LightSensor", 4096U, NULL, 2, NULL);
   // xTaskCreate(TaskTelemetry, "Telemetry", 4096U, NULL, 2, NULL);
-  // xTaskCreate(TaskOTAUpdate, "OTAupdate", 4096U, NULL, 1, NULL);
   // xTaskCreate(TaskTest, "Test", 4096U, NULL, 2, NULL);
 }
 
