@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include <cmath>
+#include <Arduino.h>
 
 #define ON 1
 #define OFF 0
@@ -29,11 +30,12 @@ struct {
 } otaUpdateState;
 
 struct AirQualitySensorState {
-    uint16_t connectionAttempt;        // Refer SensorConfig::maxConnectionAttemptMQ135
+    uint16_t connectionAttempt;         // Refer SensorConfig::maxConnectionAttemptMHZ19
     double co2;
 };
 struct LightSensorState {
-    uint16_t connectionAttempt;        // Refer SensorConfig::maxConnectionAttemptBH1750
+    volatile SemaphoreHandle_t mutex;
+    uint16_t connectionAttempt;         // Refer SensorConfig::maxConnectionAttemptBH1750
     double brightness;
 };
 struct MotionSensorState {

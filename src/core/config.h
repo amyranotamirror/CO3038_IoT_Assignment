@@ -46,7 +46,7 @@ struct TelemetryConfig {
 };
 struct OTAConfig {
     static constexpr const char* title = "SMART_OFFICE";
-    static constexpr const char* version = "1.0";
+    static constexpr const char* version = "2.0";
     static constexpr uint8_t maxFailureAttempt = 12U;
     static constexpr uint16_t firmwarePacketSize = 4096U;
     // Timing
@@ -71,10 +71,10 @@ struct SensorConfig {
     static constexpr uint32_t readBH1750Interval = SystemConfig::defaultTaskDelay * 5;
     static constexpr uint32_t readMQ135Interval = SystemConfig::defaultTaskDelay * 5;
 
-    static constexpr uint32_t connectAttemptDHT20Interval = SystemConfig::defaultTaskDelay;
-    static constexpr uint32_t connectAttemptLD2410Interval = SystemConfig::defaultTaskDelay;
-    static constexpr uint32_t connectAttemptBH1750Interval = SystemConfig::defaultTaskDelay;
-    static constexpr uint32_t connectAttemptMQ135Interval = SystemConfig::defaultTaskDelay;
+    static constexpr uint32_t connectAttemptDHT20Interval = SystemConfig::smallTaskDelay;
+    static constexpr uint32_t connectAttemptLD2410Interval = SystemConfig::smallTaskDelay;
+    static constexpr uint32_t connectAttemptBH1750Interval = SystemConfig::smallTaskDelay;
+    static constexpr uint32_t connectAttemptMQ135Interval = SystemConfig::smallTaskDelay;
 };
 
 struct ActuatorConfig {

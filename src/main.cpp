@@ -27,9 +27,10 @@ void InitSystem(){
   // Init actuators
   InitLight();
   InitBuzzer();
-
+  
   // Init sensors
-  lightSensor.begin();
+  InitLightSensor();
+  
 
   // Create RTOS tasks
   xTaskCreate(TaskWiFi, "WiFi", 4096U, NULL, 2, NULL);
@@ -38,7 +39,7 @@ void InitSystem(){
   xTaskCreate(TaskOTAUpdate, "OTAUpdate", 4096U, NULL, 1, NULL);
 
   xTaskCreate(TaskLightSensor, "LightSensor", 4096U, NULL, 2, NULL);
-  // xTaskCreate(TaskTelemetry, "Telemetry", 4096U, NULL, 2, NULL);
+  xTaskCreate(TaskTelemetry, "Telemetry", 4096U, NULL, 2, NULL);
   // xTaskCreate(TaskTest, "Test", 4096U, NULL, 2, NULL);
 }
 
