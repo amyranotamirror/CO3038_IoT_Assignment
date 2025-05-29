@@ -15,6 +15,7 @@
 #include "task_shared_attr.h"
 #include "task_wifi.h"
 #include "./core/config.h"
+#include "./core/utils.h"
 
 extern Client_Side_RPC<1U, 2U> client_rpc;
 extern Server_Side_RPC<1U, 0U> server_rpc;

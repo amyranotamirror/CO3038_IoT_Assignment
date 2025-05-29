@@ -28,17 +28,24 @@ void TaskThingsBoard(void *pvParameters) {
     } else {
       if (thingsboard.connected()) {
         if (!thingsBoardState.isConnected) {
-          Serial.println();
-          Serial.println("[INFO] ThingsBoard: Established connection.");
+          LogInfo("ThingsBoard", "Connected to ThingsBoard.");
           // RPC
           if (!thingsBoardState.isServerRPC) {
             thingsBoardState.isServerRPC = server_rpc.RPC_Subscribe(callbacks.cbegin(), callbacks.cend());
-            Serial.print("[INFO] Server RPC subscribed: "); Serial.println(thingsBoardState.isServerRPC ? "succeeded" : "failed");
+            if (thingsBoardState.isServerRPC) {
+              LogInfo("ThingsBoard", "Server RPC subscribed.");
+            } else {
+              LogError("ThingsBoard", "Failed to subscribe to Server RPC.");
+            }
           }
           // Shared attributes
           if (!thingsBoardState.isSharedAttributesUpdated) {
             thingsBoardState.isSharedAttributesUpdated = attr_update.Shared_Attributes_Subscribe(shared_attribute_callback);
-            Serial.print("[INFO] Shared attributes updated: "); Serial.println(thingsBoardState.isSharedAttributesUpdated ? "succeeded" : "failed");
+            if (thingsBoardState.isSharedAttributesUpdated) {
+              LogInfo("ThingsBoard", "Shared attributes subscribed.");
+            } else {
+              LogError("ThingsBoard", "Failed to subscribe to Shared Attributes.");
+            }
           }
           // if (!thingsBoardState.isSharedAttributesRequested) {
           //   thingsBoardState.isSharedAttributesRequested = attr_request.Shared_Attributes_Request(attribute_request_callback);
@@ -50,7 +57,7 @@ void TaskThingsBoard(void *pvParameters) {
         thingsBoardState.connectionAttempts = 0;
       } else {
         if (!thingsBoardState.isAttempting) {
-          Serial.print("[UPDATE] ThingsBoard: Connecting ...");
+          LogInfo("ThingsBoard", "Connecting ...");
           thingsboard.disconnect();
           thingsboard.connect(ThingsBoardConfig::server, ThingsBoardConfig::token, ThingsBoardConfig::port);
           thingsBoardState.isAttempting = true;
@@ -60,7 +67,7 @@ void TaskThingsBoard(void *pvParameters) {
           thingsBoardState.connectionAttempts++;
           if (thingsBoardState.connectionAttempts >= ThingsBoardConfig::maxConnectionAttempt) {
             Serial.println();
-            Serial.println("[ERROR] ThingsBoard: Failed to connect. Will retry later.");
+            LogError("ThingsBoard", "Failed to connect to ThingsBoard after maximum attempts.");
             WiFi.disconnect();
             thingsBoardState.isAttempting = false;
           }
