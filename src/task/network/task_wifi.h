@@ -6,6 +6,7 @@
 
 #include "./core/config.h"
 #include "./core/state.h"
+#include "./core/utils.h"
 
 extern WiFiClient wifiClient;
 
