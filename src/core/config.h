@@ -15,7 +15,7 @@ struct WiFiConfig {
     // static constexpr const char* wifiSSID = "AMYRANGUYEN 2995";
     // static constexpr const char* wifiPassword = "@s0T5278";
     // Harw 2.4GHz WiFi
-    static constexpr const char* wifiSSID = "NhatKhai";
+    static constexpr const char* wifiSSID = "Harw";
     static constexpr const char* wifiPassword = "baohan1107";
 
     static constexpr uint16_t maxConnectionAttempt = 20U;
@@ -26,7 +26,6 @@ struct WiFiConfig {
 struct MessageConfig {
     static constexpr uint16_t maxMessageSendSize = 512U;
     static constexpr uint16_t maxMessageReceiveSize = 512U;
-    static constexpr uint8_t maxAttributes = 2U;
 };
 
 struct ThingsBoardConfig {
@@ -39,6 +38,7 @@ struct ThingsBoardConfig {
     static constexpr uint16_t port = 1883U; 
     static constexpr uint8_t maxAttribute = 2U;
     // Timing
+    static constexpr uint16_t maxConnectionAttempt = 20U;
     static constexpr uint32_t reconnectInterval = SystemConfig::defaultTaskDelay * 5;
     static constexpr uint32_t connectionAttemptInterval = SystemConfig::smallTaskDelay;
 };

@@ -1,15 +1,16 @@
 #include "task_buzzer.h"
 
-Buzzer::Melody_t melody = {
-    .nbNotes = 8,
-    .duration = {500, 500, 500, 500, 500, 500, 500, 500},
-    .frequency = {
-        A5_NOTE_FREQ, F5_NOTE_FREQ,
-        A5_NOTE_FREQ, F5_NOTE_FREQ,
-        A5_NOTE_FREQ, F5_NOTE_FREQ,
-        A5_NOTE_FREQ, F5_NOTE_FREQ
-    }
-};
+Buzzer::Melody_t melody = {};
+// Buzzer::Melody_t melody = {
+//     .nbNotes = 8,
+//     .duration = {500, 500, 500, 500, 500, 500, 500, 500},
+//     .frequency = {
+//         A5_NOTE_FREQ, F5_NOTE_FREQ,
+//         A5_NOTE_FREQ, F5_NOTE_FREQ,
+//         A5_NOTE_FREQ, F5_NOTE_FREQ,
+//         A5_NOTE_FREQ, F5_NOTE_FREQ
+//     }
+// };
 
 Buzzer buzzer;
 

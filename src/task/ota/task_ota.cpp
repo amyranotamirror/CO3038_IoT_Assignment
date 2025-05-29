@@ -1,11 +1,6 @@
 #include "task_ota.h"
 
 Espressif_Updater<> updater;
-OTA_Firmware_Update<> ota;
-Shared_Attribute_Update<1U, ThingsBoardConfig::maxAttribute> shared_update;
-Attribute_Request<2U, ThingsBoardConfig::maxAttribute> attr_request;
-const std::array<IAPI_Implementation *, 3U> apis = {&shared_update,
-                                                    &attr_request, &ota};
 
 void TaskOTAUpdate(void *pvParameters) {
     while (1) {
@@ -61,18 +56,4 @@ void FinishedCallback(const bool &success) {
 void ProgressCallback(const size_t &current, const size_t &total) {
     Serial.printf("Progress %.2f%%\n",
                   static_cast<float>(current * 100U) / total);
-}
-void ProcessSharedAttributeUpdate(const JsonObjectConst &data) {
-    // Info
-    const size_t jsonSize = Helper::Measure_Json(data);
-    char buffer[jsonSize];
-    serializeJson(data, buffer, jsonSize);
-    Serial.println(buffer);
-}
-void ProcessSharedAttributeRequest(const JsonObjectConst &data) {
-    // Info
-    const size_t jsonSize = Helper::Measure_Json(data);
-    char buffer[jsonSize];
-    serializeJson(data, buffer, jsonSize);
-    Serial.println(buffer);
 }

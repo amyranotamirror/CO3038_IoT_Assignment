@@ -4,6 +4,7 @@
 #include "task/network/task_wifi.h"
 #include "task/network/task_thingsboard.h"
 #include "task/network/task_rpc.h"
+#include "task/network/task_shared_attr.h"
 #include "task/network/task_telemetry.h"
 #include "task/ota/task_ota.h"
 #include "task/sensors/task_air_quality_sensor.h"
@@ -22,19 +23,24 @@ void TaskTest(void *pvParameters) {
 void InitSystem(){
   // Init connection
   InitWiFi();
-  InitThingsBoard();
 
   // Init actuators
   InitLight();
   InitBuzzer();
 
+  // Init sensors
+  lightSensor.begin();
+
   // Create RTOS tasks
-  xTaskCreate(TaskLightSensor, "LightSensor", 4096U, NULL, 2, NULL);
   xTaskCreate(TaskWiFi, "WiFi", 4096U, NULL, 2, NULL);
   xTaskCreate(TaskThingsBoard, "ThingsBoard", 4096U, NULL, 2, NULL);
-  xTaskCreate(TaskTelemetry, "Telemetry", 4096U, NULL, 2, NULL);
-  xTaskCreate(TaskTest, "Test", 4096U, NULL, 2, NULL);
+  xTaskCreate(TaskThingsBoardLoop, "ThingsBoardLoop", 4096U, NULL, 2, NULL);
+
+  // xTaskCreate(TaskLightSensor, "LightSensor", 4096U, NULL, 2, NULL);
+  
+  // xTaskCreate(TaskTelemetry, "Telemetry", 4096U, NULL, 2, NULL);
   // xTaskCreate(TaskOTAUpdate, "OTAupdate", 4096U, NULL, 1, NULL);
+  // xTaskCreate(TaskTest, "Test", 4096U, NULL, 2, NULL);
 }
 
 /* ========================================================================== */

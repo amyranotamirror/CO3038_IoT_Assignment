@@ -12,7 +12,10 @@
 // Initialize light pin
 void InitLight();
 
+// Shared attributes for toggling light
+void SetLightActuatorStatus(JsonPairConst json);
+
 // RPC handler for toggling light
-// RPC_Response RPCLightActuatorControl(const RPC_Data &data);
+void RPCLightActuatorControl(const JsonVariantConst& variant, JsonDocument& document);
 
 #endif
