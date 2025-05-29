@@ -30,9 +30,7 @@ struct MessageConfig {
 
 struct ThingsBoardConfig {
     // Token
-    // static constexpr const char* token = "RkEY4A6IJfeh3DZywVF5"; // 
-    // static constexpr const char* token = "DMeXarEe7JJzQKBEMwYC"; // khai.nguyen352528@hcmut.edu.vn IOT_DEVICE_1
-    static constexpr const char* token = "nHGoWU4pTWs8Df95Nlq0"; // khai.nguyen352528@hcmut.edu.vn IOT_DEVICE_3
+    static constexpr const char* token = "EUhiYO2k6GAw35PIHa0K";
     // Server
     static constexpr const char* server = "app.coreiot.io";
     static constexpr uint16_t port = 1883U; 
