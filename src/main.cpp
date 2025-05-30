@@ -29,7 +29,7 @@ void InitSystem(){
   InitBuzzer();
   
   // Init sensors
-  InitLightSensor();
+  // InitLightSensor();
   
 
   // Create RTOS tasks
@@ -58,8 +58,4 @@ void setup() {
   
 }
 
-void loop() {
-  // thingsboard.loop();
-  // RPCLightActuatorControl(!lightActuatorState.status);
-  // vTaskDelay(pdMS_TO_TICKS(SystemConfig::defaultTaskDelay));
-}
+void loop() {}

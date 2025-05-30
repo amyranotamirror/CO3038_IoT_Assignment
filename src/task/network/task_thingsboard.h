@@ -16,10 +16,10 @@
 #include "task_wifi.h"
 #include "./core/config.h"
 
-extern Client_Side_RPC<1U, 2U> client_rpc;
-extern Server_Side_RPC<1U, 0U> server_rpc;
-extern Shared_Attribute_Update<1U, ThingsBoardConfig::maxAttribute> attr_update;
-extern Attribute_Request<1U, ThingsBoardConfig::maxAttribute> attr_request;
+extern Client_Side_RPC<RPCAttributeConfig::MaxSubscription, RPCAttributeConfig::MaxRequestRPC> client_rpc;
+extern Server_Side_RPC<RPCAttributeConfig::MaxSubscription, RPCAttributeConfig::MaxRPC> server_rpc;
+extern Shared_Attribute_Update<RPCAttributeConfig::MaxSubscription, RPCAttributeConfig::maxAttribute> attr_update;
+extern Attribute_Request<RPCAttributeConfig::MaxSubscription, RPCAttributeConfig::maxAttribute> attr_request;
 extern OTA_Firmware_Update<> ota;
 extern const std::array<IAPI_Implementation*, 5U> apis;
 

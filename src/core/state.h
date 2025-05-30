@@ -20,6 +20,7 @@ struct ThingsBoardState {
     bool isServerRPC;
     bool isSharedAttributesUpdated;
     bool isSharedAttributesRequested;
+    bool isSharedAttributesRequestProcessed;
 };
 
 struct {
@@ -48,12 +49,16 @@ struct TempHumidSensorState {
     double humidity;
 };
 
+struct LightActuatorState {
+    uint8_t mode;
+};
+
 struct {
     bool status = ON;
 } buzzerState;
 struct {
     bool status = ON;
-} lightActuatorState;
+} alertState;
 
 extern volatile WifiState wifiState;
 extern volatile ThingsBoardState thingsBoardState;
@@ -62,5 +67,7 @@ extern volatile TempHumidSensorState tempHumidSensorState;
 extern volatile AirQualitySensorState airQualitySensorState;
 extern volatile LightSensorState lightSensorState;
 extern volatile MotionSensorState motionSensorState;
+
+extern volatile LightActuatorState lightActuatorState;
 
 #endif

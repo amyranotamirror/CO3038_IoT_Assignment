@@ -1,14 +1,33 @@
 #include "task_light.h"
 
-void InitLight(){
-    pinMode(ActuatorConfig::lightPin, OUTPUT);
-    digitalWrite(ActuatorConfig::lightPin, false);
+void InitLight() {
+  pinMode(ActuatorConfig::lightPin0, OUTPUT);
+  pinMode(ActuatorConfig::lightPin1, OUTPUT);
+  digitalWrite(ActuatorConfig::lightPin0, OFF);
+  digitalWrite(ActuatorConfig::lightPin1, OFF);
 }
 
 void SetLightActuatorStatus(JsonPairConst json) {
-  bool ledState = json.value().as<bool>();
-  digitalWrite(ActuatorConfig::lightPin, ledState);
-  Serial.print("Light state is updated to: "); Serial.println(ledState);
+  lightActuatorState.mode = json.value().as<uint8_t>();
+  switch (lightActuatorState.mode) {
+  case 1:
+    digitalWrite(ActuatorConfig::lightPin0, ON);
+    digitalWrite(ActuatorConfig::lightPin1, OFF);
+    break;
+  case 2:
+    digitalWrite(ActuatorConfig::lightPin0, OFF);
+    digitalWrite(ActuatorConfig::lightPin1, ON);
+    break;
+  case 3:
+    digitalWrite(ActuatorConfig::lightPin0, ON);
+    digitalWrite(ActuatorConfig::lightPin1, ON);
+    break;
+  default:
+    digitalWrite(ActuatorConfig::lightPin0, OFF);
+    digitalWrite(ActuatorConfig::lightPin1, OFF);
+    break;
+  }
+  LogUpdate("Light mode", "updated to ", String(lightActuatorState.mode).c_str());
 }
 
 // void RPCLightActuatorControl(const JsonVariantConst& variant, JsonDocument& document) {
@@ -24,11 +43,11 @@ void SetLightActuatorStatus(JsonPairConst json) {
 // }
 
 void RPCLightActuatorControl(const JsonVariantConst& variant, JsonDocument& document) {
-  Serial.println("If I did then she would want to be my girlfriend...");
+  Serial.println("RPCLightActuatorControl is called");
   const size_t jsonSize = Helper::Measure_Json(variant);
   char buffer[jsonSize];
   serializeJson(variant, buffer, jsonSize);
   Serial.println(buffer);
-  lightActuatorState.status = variant.as<bool>();
-  digitalWrite(ActuatorConfig::lightPin, lightActuatorState.status);
+  alertState.status = variant.as<bool>();
+  digitalWrite(ActuatorConfig::lightPin, alertState.status);
 }

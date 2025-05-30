@@ -37,13 +37,6 @@ void TaskOTAUpdate(void *pvParameters) {
         vTaskDelay(pdMS_TO_TICKS(OTAConfig::otaUpdateInterval));
     }
 }
-void RequestTimedOut() {
-    Serial.printf(
-        "Attribute request timed out did not receive a response in (%llu) "
-        "microseconds. Ensure client is connected to the MQTT broker and that "
-        "the keys actually exist on the target device\n",
-        OTAConfig::requestTimeoutMicroseconds);
-}
 void UpdateStartingCallback() {}
 void FinishedCallback(const bool &success) {
     if (success) {

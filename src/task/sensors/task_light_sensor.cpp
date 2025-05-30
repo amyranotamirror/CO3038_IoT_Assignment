@@ -51,7 +51,7 @@ void TaskLightSensor(void *pvParameters) {
 
     // Read the light level
     lightSensorState.brightness = lightSensor.readLightLevel();
-    Serial.print("Got "); Serial.print(SensorConfig::brightnessKey); Serial.print(": "); Serial.print(lightSensorState.brightness); Serial.println(" lux");
+    LogRead(SensorConfig::brightnessKey, String(lightSensorState.brightness, 4).c_str(), "lux");
     GiveMutex(lightSensorState.mutex, "Light sensor");
 
     vTaskDelay(SensorConfig::readBH1750Interval); // Use normal interval for next read

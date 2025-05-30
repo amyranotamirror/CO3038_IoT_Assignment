@@ -8,8 +8,7 @@
 #include "./core/state.h"
 #include "./task/network/task_thingsboard.h"
 
-void TaskOTAUpdate(void *pvParameters); 
-void RequestTimedOut();
+void TaskOTAUpdate(void *pvParameters);
 void UpdateStartingCallback();
 void FinishedCallback(const bool &success);
 void ProgressCallback(const size_t &current, const size_t &total);
