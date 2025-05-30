@@ -2,31 +2,10 @@
 
 WiFiClient wifiClient;
 
-// void InitWiFi() {
-//   Serial.print("Connecting to WiFi ...");
-//   WiFi.disconnect();
-//   WiFi.begin(WiFiConfig::wifiSSID, WiFiConfig::wifiPassword);
-//   while (WiFi.status() != WL_CONNECTED) {
-//     delay(WiFiConfig::connectionAttemptInterval);
-//     Serial.print(".");
-//   }
-//   Serial.println(); Serial.println("Connected to WiFi!");
-// }
-
-// void TaskWiFi(void *pvParameters) {
-//   while(1) {
-//     if (WiFi.status() != WL_CONNECTED) {
-//       Serial.println("WiFi disconnected, attempting to reconnect ...");
-//       InitWiFi();
-//     }
-//     vTaskDelay(WiFiConfig::reconnectInterval);
-//   }
-// }
-
 void InitWiFi() {
   WiFi.mode(WIFI_STA);
   WiFi.setAutoReconnect(false);
-  Serial.println("[INFO] WiFi: Initialized in STA mode.");
+  LogInfo("WiFi", "Initialized in STA mode");
 }
 
 void TaskWiFi(void *pvParameters) {
@@ -35,8 +14,8 @@ void TaskWiFi(void *pvParameters) {
       // Connection was established
       if (!wifiState.isConnected) {
         Serial.println();
-        Serial.println("[INFO] WiFi: Established connection.");
-        Serial.print("[INFO] IP address: "); Serial.println(WiFi.localIP());
+        LogInfo("WiFi", "Established connection");
+        LogInfo("IP address", WiFi.localIP().toString().c_str());
       }
       // Maintain connection
       wifiState.isConnected = true;
@@ -45,7 +24,7 @@ void TaskWiFi(void *pvParameters) {
     } else {
       if (!wifiState.isAttempting) {
         // Initiate connection
-        Serial.print("[UPDATE] Wifi: Connecting ...");
+        Serial.print("[UPDATE] WiFi: Connecting ...");
         WiFi.disconnect();
         WiFi.begin(WiFiConfig::wifiSSID, WiFiConfig::wifiPassword);
         // Maintain connection
@@ -56,7 +35,7 @@ void TaskWiFi(void *pvParameters) {
         wifiState.connectionAttempts++;
         if (wifiState.connectionAttempts >= WiFiConfig::maxConnectionAttempt) {
           Serial.println();
-          Serial.println("[ERROR] WiFi: Failed to connect. Will retry later.");
+          LogError("WiFi", "Failed to connect");
           WiFi.disconnect();
           wifiState.isAttempting = false;
         }

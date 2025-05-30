@@ -30,20 +30,20 @@ void TaskThingsBoard(void *pvParameters) {
       if (thingsboard.connected()) {
         if (!thingsBoardState.isConnected) {
           Serial.println();
-          Serial.println("[INFO] ThingsBoard: Established connection.");
+          LogInfo("ThingsBoard", "Established connection");
           // RPC
           if (!thingsBoardState.isServerRPC) {
             thingsBoardState.isServerRPC = server_rpc.RPC_Subscribe(callbacks.cbegin(), callbacks.cend());
-            Serial.print("[INFO] Server RPC subscribed: "); Serial.println(thingsBoardState.isServerRPC ? "succeeded" : "failed");
+            LogInfo("Server RPC subscribed", thingsBoardState.isServerRPC ? "succeeded" : "failed");
           }
           // Shared attributes
           if (!thingsBoardState.isSharedAttributesUpdated) {
             thingsBoardState.isSharedAttributesUpdated = attr_update.Shared_Attributes_Subscribe(shared_attribute_callback);
-            Serial.print("[INFO] Shared attributes updated: "); Serial.println(thingsBoardState.isSharedAttributesUpdated ? "succeeded" : "failed");
+            LogInfo("Shared attributes updated", thingsBoardState.isSharedAttributesUpdated ? "succeeded" : "failed");
           }
           if (!thingsBoardState.isSharedAttributesRequested) {
             thingsBoardState.isSharedAttributesRequested = attr_request.Shared_Attributes_Request(attribute_request_callback);
-            Serial.print("[INFO] Shared attributes requested: "); Serial.println(thingsBoardState.isSharedAttributesRequested ? "succeeded" : "failed");
+            LogInfo("Shared attributes requested", thingsBoardState.isSharedAttributesRequested ? "succeeded" : "failed");
           }
         }
         thingsBoardState.isConnected = true;
@@ -61,7 +61,7 @@ void TaskThingsBoard(void *pvParameters) {
           thingsBoardState.connectionAttempts++;
           if (thingsBoardState.connectionAttempts >= ThingsBoardConfig::maxConnectionAttempt) {
             Serial.println();
-            Serial.println("[ERROR] ThingsBoard: Failed to connect. Will retry later.");
+            LogError("ThingsBoard", "Failed to connect");
             WiFi.disconnect();
             thingsBoardState.isAttempting = false;
           }

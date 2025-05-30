@@ -15,6 +15,7 @@
 #include "task_shared_attr.h"
 #include "task_wifi.h"
 #include "./core/config.h"
+#include "./core/utils.h"
 
 extern Client_Side_RPC<RPCAttributeConfig::MaxSubscription, RPCAttributeConfig::MaxRequestRPC> client_rpc;
 extern Server_Side_RPC<RPCAttributeConfig::MaxSubscription, RPCAttributeConfig::MaxRPC> server_rpc;
