@@ -7,9 +7,8 @@
 #include <ThingsBoard.h>
 
 // #include "../actuators/task_air_cond.h"
-// #include "../actuators/task_buzzer.h"
+#include "../actuators/task_buzzer.h"
 // #include "../actuators/task_curtain.h"
-#include "../actuators/task_light.h"
 // #include "../actuators/task_relay.h"
 #include "../network/task_thingsboard.h"
 

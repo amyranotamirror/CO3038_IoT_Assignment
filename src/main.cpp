@@ -1,5 +1,6 @@
 #include <HardwareSerial.h>
 #include <Wire.h>
+#include <MQ135.h>
 
 #include "task/network/task_wifi.h"
 #include "task/network/task_thingsboard.h"
@@ -14,12 +15,15 @@
 #include "task/actuators/task_light.h"
 #include "task/actuators/task_buzzer.h"
 
-void TaskTest(void *pvParameters) {
-  while(1) {
-    thingsboard.loop();
-    vTaskDelay(SystemConfig::defaultTaskDelay);
-  }
-}
+// MQ135 airQualitySensor = MQ135(GPIO_NUM_39);
+// void TaskTest(void *pvParameters) {
+//   while(1) {
+//     float ppm = airQualitySensor.getPPM();
+//     LogRead("air", String(ppm, 4).c_str(), "ppm");
+//     vTaskDelay(SystemConfig::defaultTaskDelay * 3);
+//   }
+// }
+
 void InitSystem(){
   // Init connection
   InitWiFi();

@@ -1,10 +1,11 @@
 #include "task_ota.h"
 
 Espressif_Updater<> updater;
+const OTA_Update_Callback ota_update_callback(OTAConfig::title, OTAConfig::version, &updater, &FinishedCallback, &ProgressCallback, &UpdateStartingCallback, OTAConfig::maxFailureAttempt, OTAConfig::firmwarePacketSize);
 
 void TaskOTAUpdate(void *pvParameters) {
     while (1) {
-        if (thingsboard.connected() && WiFi.status() == WL_CONNECTED) {
+        if (thingsBoardState.isSharedAttributesRequestProcessed) {
             // Send current FW
             if(!otaUpdateState.currentFWSent){
                 otaUpdateState.currentFWSent = ota.Firmware_Send_Info(
@@ -15,22 +16,15 @@ void TaskOTAUpdate(void *pvParameters) {
                 Serial.print(OTAConfig::title);
                 Serial.print(" ");
                 Serial.println(OTAConfig::version);
-                Serial.println("[UPDATE] OTA Update: Firmware Update ...");
+                LogUpdate("OTA update", "Firmware update...", "");
                 // Start updating
-                const OTA_Update_Callback callback(
-                    OTAConfig::title, OTAConfig::version, &updater,
-                    &FinishedCallback, &ProgressCallback,
-                    &UpdateStartingCallback, OTAConfig::maxFailureAttempt,
-                    OTAConfig::firmwarePacketSize);
                 otaUpdateState.updateRequestSent =
-                    ota.Start_Firmware_Update(callback);
+                    ota.Start_Firmware_Update(ota_update_callback);
                 if (otaUpdateState.updateRequestSent) {
                     delay(500);
-                    Serial.println(
-                        "[UPDATE] OTA Update: Firmware Update "
-                        "Subscription...");
+                    LogUpdate("OTA update", "Firmware update subscription...", "");
                     otaUpdateState.updateRequestSent =
-                        ota.Subscribe_Firmware_Update(callback);
+                        ota.Subscribe_Firmware_Update(ota_update_callback);
                 }
             }
         }
@@ -40,11 +34,11 @@ void TaskOTAUpdate(void *pvParameters) {
 void UpdateStartingCallback() {}
 void FinishedCallback(const bool &success) {
     if (success) {
-        Serial.println("Done, Reboot now");
+        LogSuccess("OTA update", "Done, reboot now");
         esp_restart();
-        return;
+    } else {
+        LogError("OTA update", "Downloading firmware failed");
     }
-    Serial.println("Downloading firmware failed");
 }
 void ProgressCallback(const size_t &current, const size_t &total) {
     Serial.printf("Progress %.2f%%\n",
