@@ -15,6 +15,10 @@ extern const Shared_Attribute_Callback<RPCAttributeConfig::maxAttribute> shared_
 extern const Attribute_Request_Callback<RPCAttributeConfig::maxAttribute> attribute_request_callback;
 
 void RequestTimedOut();
+<<<<<<< HEAD
+=======
+
+>>>>>>> develop
 void processSharedAttributes(const JsonObjectConst &data);
 void processSharedAttributeUpdate(const JsonObjectConst &data);
 void processSharedAttributeRequest(const JsonObjectConst &data);

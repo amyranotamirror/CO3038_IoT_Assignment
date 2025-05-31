@@ -16,16 +16,28 @@ void processSharedAttributes(const JsonObjectConst &data) {
 }
 
 void processSharedAttributeUpdate(const JsonObjectConst &data) {
+<<<<<<< HEAD
     const size_t jsonSize = Helper::Measure_Json(data);
     char buffer[jsonSize];
     serializeJson(data, buffer, jsonSize);
+=======
+  const size_t jsonSize = Helper::Measure_Json(data);
+  char buffer[jsonSize];
+  serializeJson(data, buffer, jsonSize);
+>>>>>>> develop
   LogInfo("Shared attribute callback", buffer);
   processSharedAttributes(data);
 }
 void processSharedAttributeRequest(const JsonObjectConst &data) {
+<<<<<<< HEAD
     const size_t jsonSize = Helper::Measure_Json(data);
     char buffer[jsonSize];
     serializeJson(data, buffer, jsonSize);
+=======
+  const size_t jsonSize = Helper::Measure_Json(data);
+  char buffer[jsonSize];
+  serializeJson(data, buffer, jsonSize);
+>>>>>>> develop
   LogInfo("Attribute request callback", buffer);
   processSharedAttributes(data);
   thingsBoardState.isSharedAttributesRequestProcessed = true;

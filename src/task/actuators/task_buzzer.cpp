@@ -20,7 +20,6 @@ Buzzer buzzer;
 
 void InitBuzzer(){
     buzzer.init(ActuatorConfig::buzzerPin);
-    
 }
 bool GetBuzzerStatus() {
     return buzzerState.status;

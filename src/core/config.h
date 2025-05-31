@@ -35,7 +35,6 @@ struct ThingsBoardConfig {
     // Server
     static constexpr const char* server = "app.coreiot.io";
     static constexpr uint16_t port = 1883U; 
-    static constexpr uint8_t maxAttribute = 2U;
     // Timing
     static constexpr uint16_t maxConnectionAttempt = 20U;
     static constexpr uint32_t reconnectInterval = SystemConfig::defaultTaskDelay * 5;
@@ -59,7 +58,6 @@ struct OTAConfig {
     static constexpr uint16_t firmwarePacketSize = 4096U;
     // Timing
     static constexpr uint32_t otaUpdateInterval = SystemConfig::defaultTaskDelay * 5;
-    static constexpr uint64_t requestTimeoutMicroseconds = 10000U * 1000U;
 };
 
 struct SensorConfig {

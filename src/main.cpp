@@ -1,5 +1,6 @@
 #include <HardwareSerial.h>
 #include <Wire.h>
+#include <MQ135.h>
 
 #include "task/network/task_wifi.h"
 #include "task/network/task_thingsboard.h"
@@ -14,12 +15,15 @@
 #include "task/actuators/task_light.h"
 #include "task/actuators/task_buzzer.h"
 
-void TaskTest(void *pvParameters) {
-  while(1) {
-    thingsboard.loop();
-    vTaskDelay(SystemConfig::defaultTaskDelay);
-  }
-}
+// MQ135 airQualitySensor = MQ135(GPIO_NUM_39);
+// void TaskTest(void *pvParameters) {
+//   while(1) {
+//     float ppm = airQualitySensor.getPPM();
+//     LogRead("air", String(ppm, 4).c_str(), "ppm");
+//     vTaskDelay(SystemConfig::defaultTaskDelay * 3);
+//   }
+// }
+
 void InitSystem(){
   // Init connection
   InitWiFi();
@@ -29,7 +33,7 @@ void InitSystem(){
   InitBuzzer();
   
   // Init sensors
-  InitLightSensor();
+  // InitLightSensor();
   
 
   // Create RTOS tasks
@@ -38,8 +42,8 @@ void InitSystem(){
   xTaskCreate(TaskThingsBoardLoop, "ThingsBoardLoop", 4096U, NULL, 2, NULL);
   xTaskCreate(TaskOTAUpdate, "OTAUpdate", 4096U, NULL, 1, NULL);
 
-  xTaskCreate(TaskLightSensor, "LightSensor", 4096U, NULL, 2, NULL);
-  xTaskCreate(TaskTelemetry, "Telemetry", 4096U, NULL, 2, NULL);
+  // xTaskCreate(TaskLightSensor, "LightSensor", 4096U, NULL, 2, NULL);
+  // xTaskCreate(TaskTelemetry, "Telemetry", 4096U, NULL, 2, NULL);
   // xTaskCreate(TaskTest, "Test", 4096U, NULL, 2, NULL);
 }
 
@@ -58,8 +62,4 @@ void setup() {
   
 }
 
-void loop() {
-  // thingsboard.loop();
-  // RPCLightActuatorControl(!lightActuatorState.status);
-  // vTaskDelay(pdMS_TO_TICKS(SystemConfig::defaultTaskDelay));
-}
+void loop() {}

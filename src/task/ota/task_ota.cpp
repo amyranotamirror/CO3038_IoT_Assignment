@@ -18,41 +18,27 @@ void TaskOTAUpdate(void *pvParameters) {
                 Serial.println(OTAConfig::version);
                 LogUpdate("OTA update", "Firmware update...", "");
                 // Start updating
-                const OTA_Update_Callback callback(
-                    OTAConfig::title, OTAConfig::version, &updater,
-                    &FinishedCallback, &ProgressCallback,
-                    &UpdateStartingCallback, OTAConfig::maxFailureAttempt,
-                    OTAConfig::firmwarePacketSize);
                 otaUpdateState.updateRequestSent =
-                    ota.Start_Firmware_Update(callback);
+                    ota.Start_Firmware_Update(ota_update_callback);
                 if (otaUpdateState.updateRequestSent) {
                     delay(500);
-                    Serial.println(
-                        "[UPDATE] OTA Update: Firmware Update "
-                        "Subscription...");
+                    LogUpdate("OTA update", "Firmware update subscription...", "");
                     otaUpdateState.updateRequestSent =
-                        ota.Subscribe_Firmware_Update(callback);
+                        ota.Subscribe_Firmware_Update(ota_update_callback);
                 }
             }
         }
         vTaskDelay(pdMS_TO_TICKS(OTAConfig::otaUpdateInterval));
     }
 }
-void RequestTimedOut() {
-    Serial.printf(
-        "Attribute request timed out did not receive a response in (%llu) "
-        "microseconds. Ensure client is connected to the MQTT broker and that "
-        "the keys actually exist on the target device\n",
-        OTAConfig::requestTimeoutMicroseconds);
-}
 void UpdateStartingCallback() {}
 void FinishedCallback(const bool &success) {
     if (success) {
-        Serial.println("Done, Reboot now");
+        LogSuccess("OTA update", "Done, reboot now");
         esp_restart();
-        return;
+    } else {
+        LogError("OTA update", "Downloading firmware failed");
     }
-    Serial.println("Downloading firmware failed");
 }
 void ProgressCallback(const size_t &current, const size_t &total) {
     Serial.printf("Progress %.2f%%\n",
