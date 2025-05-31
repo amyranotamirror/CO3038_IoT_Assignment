@@ -9,7 +9,7 @@ void RequestTimedOut() {
 
 void processSharedAttributes(const JsonObjectConst &data) {
   for (auto it = data.begin(); it != data.end(); ++ it) {
-    if (strcmp(it->key().c_str(), "lightActuatorStateStatus") == 0) {
+    if (strcmp(it->key().c_str(), "lightActuatorMode") == 0) {
       SetLightActuatorStatus(*it);
     }
   }
