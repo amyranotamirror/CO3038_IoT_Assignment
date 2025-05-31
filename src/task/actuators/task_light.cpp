@@ -36,8 +36,8 @@ void SetLightActuatorStatus(JsonPairConst json) {
 //   char buffer[jsonSize];
 //   serializeJson(variant, buffer, jsonSize);
 //   Serial.println(buffer);
-//   if (variant.containsKey("lightActuatorStateStatus")) {
-//     lightActuatorState.status = variant["lightActuatorStateStatus"].as<bool>();
+//   if (variant.containsKey("lightActuatorMode")) {
+//     lightActuatorState.status = variant["lightActuatorMode"].as<bool>();
 //     digitalWrite(ActuatorConfig::lightPin, lightActuatorState.status);
 //  }
 // }
