@@ -85,7 +85,6 @@ if (thingsBoardState.isSharedAttributesRequestProcessed) {
           thingsBoardState.isAttempting = true;
           thingsBoardState.connectionAttempts = 0;
         } else {
-          Serial.print(".");
           thingsBoardState.connectionAttempts++;
           if (thingsBoardState.connectionAttempts >= ThingsBoardConfig::maxConnectionAttempt) {
             Serial.println();
