@@ -13,7 +13,7 @@
 #include "../network/task_thingsboard.h"
 
 // Define your ThingsBoard RPC callback type
-extern const std::array<RPC_Request_Callback, 1U> request_callbacks;
-extern const std::array<RPC_Callback, 1U> callbacks;
+extern const std::array<RPC_Request_Callback, 1U> rpc_request_callbacks;
+extern const std::array<RPC_Callback, 1U> rpc_callbacks;
 
 #endif

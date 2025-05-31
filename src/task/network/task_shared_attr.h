@@ -10,7 +10,7 @@
 #include "../actuators/task_light.h"
 #include "../network/task_thingsboard.h"
 
-constexpr std::array<const char *, 1U> SHARED_ATTRIBUTES_LIST = {"lightActuatorStateStatus"};
+constexpr std::array<const char *, 1U> shared_attribute_list = {"lightActuatorMode"};
 extern const Shared_Attribute_Callback<RPCAttributeConfig::maxAttribute> shared_attribute_callback;
 extern const Attribute_Request_Callback<RPCAttributeConfig::maxAttribute> attribute_request_callback;
 

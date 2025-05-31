@@ -1,7 +1,7 @@
 #include "task_shared_attr.h"
 
-const Shared_Attribute_Callback<RPCAttributeConfig::maxAttribute> shared_attribute_callback(&processSharedAttributeUpdate, SHARED_ATTRIBUTES_LIST);
-const Attribute_Request_Callback<RPCAttributeConfig::maxAttribute> attribute_request_callback(&processSharedAttributeRequest, RPCAttributeConfig::requestTimeoutMicroseconds, &RequestTimedOut, SHARED_ATTRIBUTES_LIST);
+const Shared_Attribute_Callback<RPCAttributeConfig::maxAttribute> shared_attribute_callback(&processSharedAttributeUpdate, shared_attribute_list);
+const Attribute_Request_Callback<RPCAttributeConfig::maxAttribute> attribute_request_callback(&processSharedAttributeRequest, RPCAttributeConfig::requestTimeoutMicroseconds, &RequestTimedOut, shared_attribute_list);
 
 void RequestTimedOut() {
   LogError("Attribute request callback", "timed out");

@@ -34,7 +34,7 @@ void TaskThingsBoard(void *pvParameters) {
         thingsBoardState.connectionAttempts = 0;
 // RPC
 if (!thingsBoardState.isServerRPC) {
-  thingsBoardState.isServerRPC = server_rpc.RPC_Subscribe(callbacks.cbegin(), callbacks.cend());
+  thingsBoardState.isServerRPC = server_rpc.RPC_Subscribe(rpc_callbacks.cbegin(), rpc_callbacks.cend());
   if (thingsBoardState.isServerRPC) {
     LogSuccess("Server RPC", "subscribed successfully");
   } else {
