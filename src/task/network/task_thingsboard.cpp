@@ -1,9 +1,9 @@
 #include "task_thingsboard.h"
 
-Client_Side_RPC<1U, 2U> client_rpc;
-Server_Side_RPC<1U, 0U> server_rpc;
-Shared_Attribute_Update<1U, ThingsBoardConfig::maxAttribute> attr_update;
-Attribute_Request<1U, ThingsBoardConfig::maxAttribute> attr_request;
+Client_Side_RPC<RPCAttributeConfig::MaxSubscription, RPCAttributeConfig::MaxRequestRPC> client_rpc;
+Server_Side_RPC<RPCAttributeConfig::MaxSubscription, RPCAttributeConfig::MaxRPC> server_rpc;
+Shared_Attribute_Update<RPCAttributeConfig::MaxSubscription, RPCAttributeConfig::maxAttribute> attr_update;
+Attribute_Request<RPCAttributeConfig::MaxSubscription, RPCAttributeConfig::maxAttribute> attr_request;
 OTA_Firmware_Update<> ota;
 const std::array<IAPI_Implementation*, 5U> apis = {&client_rpc, &server_rpc, &attr_update, &attr_request, &ota};
 
@@ -25,49 +25,42 @@ void TaskThingsBoard(void *pvParameters) {
       attr_update.Shared_Attributes_Unsubscribe();
       thingsBoardState.isSharedAttributesUpdated = false;
       thingsBoardState.isSharedAttributesRequested = false;
+      thingsBoardState.isSharedAttributesRequestProcessed = false;
     } else {
       if (thingsboard.connected()) {
         if (!thingsBoardState.isConnected) {
-          LogInfo("ThingsBoard", "Connected to ThingsBoard.");
+          Serial.println();
+          LogInfo("ThingsBoard", "Established connection");
           // RPC
           if (!thingsBoardState.isServerRPC) {
             thingsBoardState.isServerRPC = server_rpc.RPC_Subscribe(callbacks.cbegin(), callbacks.cend());
-            if (thingsBoardState.isServerRPC) {
-              LogInfo("ThingsBoard", "Server RPC subscribed.");
-            } else {
-              LogError("ThingsBoard", "Failed to subscribe to Server RPC.");
-            }
+            LogInfo("Server RPC subscribed", thingsBoardState.isServerRPC ? "succeeded" : "failed");
           }
           // Shared attributes
           if (!thingsBoardState.isSharedAttributesUpdated) {
             thingsBoardState.isSharedAttributesUpdated = attr_update.Shared_Attributes_Subscribe(shared_attribute_callback);
-            if (thingsBoardState.isSharedAttributesUpdated) {
-              LogInfo("ThingsBoard", "Shared attributes subscribed.");
-            } else {
-              LogError("ThingsBoard", "Failed to subscribe to Shared Attributes.");
+            LogInfo("Shared attributes updated", thingsBoardState.isSharedAttributesUpdated ? "succeeded" : "failed");
             }
+          if (!thingsBoardState.isSharedAttributesRequested) {
+            thingsBoardState.isSharedAttributesRequested = attr_request.Shared_Attributes_Request(attribute_request_callback);
+            LogInfo("Shared attributes requested", thingsBoardState.isSharedAttributesRequested ? "succeeded" : "failed");
           }
-          // if (!thingsBoardState.isSharedAttributesRequested) {
-          //   thingsBoardState.isSharedAttributesRequested = attr_request.Shared_Attributes_Request(attribute_request_callback);
-          //   Serial.print("[INFO] Shared attributes requested: "); Serial.println(thingsBoardState.isSharedAttributesRequested ? "succeeded" : "failed");
-          // }
         }
         thingsBoardState.isConnected = true;
         thingsBoardState.isAttempting = false;
         thingsBoardState.connectionAttempts = 0;
       } else {
         if (!thingsBoardState.isAttempting) {
-          LogInfo("ThingsBoard", "Connecting ...");
+          Serial.print("[UPDATE] ThingsBoard: Connecting ...");
           thingsboard.disconnect();
           thingsboard.connect(ThingsBoardConfig::server, ThingsBoardConfig::token, ThingsBoardConfig::port);
           thingsBoardState.isAttempting = true;
           thingsBoardState.connectionAttempts = 0;
         } else {
-          // Serial.print(".");
           thingsBoardState.connectionAttempts++;
           if (thingsBoardState.connectionAttempts >= ThingsBoardConfig::maxConnectionAttempt) {
             Serial.println();
-            LogError("ThingsBoard", "Failed to connect to ThingsBoard after maximum attempts.");
+            LogError("ThingsBoard", "Failed to connect");
             WiFi.disconnect();
             thingsBoardState.isAttempting = false;
           }

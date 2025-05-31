@@ -1,10 +1,11 @@
 #include "task_ota.h"
 
 Espressif_Updater<> updater;
+const OTA_Update_Callback ota_update_callback(OTAConfig::title, OTAConfig::version, &updater, &FinishedCallback, &ProgressCallback, &UpdateStartingCallback, OTAConfig::maxFailureAttempt, OTAConfig::firmwarePacketSize);
 
 void TaskOTAUpdate(void *pvParameters) {
     while (1) {
-        if (thingsboard.connected() && WiFi.status() == WL_CONNECTED) {
+        if (thingsBoardState.isSharedAttributesRequestProcessed) {
             // Send current FW
             if(!otaUpdateState.currentFWSent){
                 otaUpdateState.currentFWSent = ota.Firmware_Send_Info(
@@ -15,7 +16,7 @@ void TaskOTAUpdate(void *pvParameters) {
                 Serial.print(OTAConfig::title);
                 Serial.print(" ");
                 Serial.println(OTAConfig::version);
-                Serial.println("[UPDATE] OTA Update: Firmware Update ...");
+                LogUpdate("OTA update", "Firmware update...", "");
                 // Start updating
                 const OTA_Update_Callback callback(
                     OTAConfig::title, OTAConfig::version, &updater,

@@ -1,6 +1,7 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+#include <ThingsBoard.h>
 #include <cstdint>
 
 struct SystemConfig {
@@ -44,6 +45,13 @@ struct TelemetryConfig {
     // Timing
     static constexpr uint32_t sendInterval = 10000U;
 };
+struct RPCAttributeConfig {
+    static constexpr uint8_t MaxRPC = 0U;
+    static constexpr uint8_t MaxRequestRPC = 2U;
+    static constexpr uint8_t MaxSubscription = 1U;
+    static constexpr uint8_t maxAttribute = 2U;
+    static constexpr uint64_t requestTimeoutMicroseconds = 10000U * 1000U;
+};
 struct OTAConfig {
     static constexpr const char* title = "SMART_OFFICE";
     static constexpr const char* version = "2.0";
@@ -84,7 +92,9 @@ struct ActuatorConfig {
     static constexpr const char* indicatorLightKey = "indicator";
 
     static constexpr uint16_t lightPin = GPIO_NUM_2;
-    static constexpr uint8_t buzzerPin = GPIO_NUM_13;
+    static constexpr uint16_t lightPin0 = GPIO_NUM_18;
+    static constexpr uint16_t lightPin1 = GPIO_NUM_19;
+    static constexpr uint8_t buzzerPin = GPIO_NUM_12;
 };
 
 #endif

@@ -1,6 +1,10 @@
 #include "task_buzzer.h"
 
-Buzzer::Melody_t melody = {};
+Buzzer::Melody_t melody = {
+    .nbNotes = 2,
+    .duration = {500, 500},
+    .frequency = {A5_NOTE_FREQ, F5_NOTE_FREQ}
+};
 // Buzzer::Melody_t melody = {
 //     .nbNotes = 8,
 //     .duration = {500, 500, 500, 500, 500, 500, 500, 500},
@@ -43,4 +47,14 @@ void TaskBuzzer(void *pvParameters){
         
         vTaskDelay(pdMS_TO_TICKS(10));
     }
+}
+
+void RPCBuzzerControl(const JsonVariantConst& variant, JsonDocument& document) {
+  Serial.println("RPCBuzzerControl is called");
+  const size_t jsonSize = Helper::Measure_Json(variant);
+  char buffer[jsonSize];
+  serializeJson(variant, buffer, jsonSize);
+  Serial.println(buffer);
+  alertState.status = variant.as<bool>();
+  digitalWrite(ActuatorConfig::lightPin, alertState.status);
 }
