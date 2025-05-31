@@ -63,7 +63,7 @@ void TaskThingsBoard(void *pvParameters) {
           thingsBoardState.isAttempting = true;
           thingsBoardState.connectionAttempts = 0;
         } else {
-          Serial.print(".");
+          // Serial.print(".");
           thingsBoardState.connectionAttempts++;
           if (thingsBoardState.connectionAttempts >= ThingsBoardConfig::maxConnectionAttempt) {
             Serial.println();
