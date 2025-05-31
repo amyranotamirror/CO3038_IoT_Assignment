@@ -40,11 +40,7 @@ void TaskThingsBoard(void *pvParameters) {
           if (!thingsBoardState.isSharedAttributesUpdated) {
             thingsBoardState.isSharedAttributesUpdated = attr_update.Shared_Attributes_Subscribe(shared_attribute_callback);
             LogInfo("Shared attributes updated", thingsBoardState.isSharedAttributesUpdated ? "succeeded" : "failed");
-<<<<<<< HEAD
-            }
-=======
           }
->>>>>>> develop
           if (!thingsBoardState.isSharedAttributesRequested) {
             thingsBoardState.isSharedAttributesRequested = attr_request.Shared_Attributes_Request(attribute_request_callback);
             LogInfo("Shared attributes requested", thingsBoardState.isSharedAttributesRequested ? "succeeded" : "failed");
