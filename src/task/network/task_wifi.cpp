@@ -35,7 +35,7 @@ void TaskWiFi(void *pvParameters) {
       // Connection was established
       if (!wifiState.isConnected) {
         Serial.println();
-        LogInfo("WiFi", "Connected successfully.");
+        LogSuccess("WiFi", "Connected successfully.");
         LogInfo("WiFi", "IP address: " + String(WiFi.localIP()));
       }
       // Maintain connection
@@ -55,7 +55,7 @@ void TaskWiFi(void *pvParameters) {
         Serial.print(".");
         wifiState.connectionAttempts++;
         if (wifiState.connectionAttempts >= WiFiConfig::maxConnectionAttempt) {
-          LogInfo("WiFi", "Failed to connect. Maximum connection attempts reached.");
+          LogError("WiFi", "Failed to connect. Maximum connection attempts reached.");
           WiFi.disconnect();
           wifiState.isAttempting = false;
         }

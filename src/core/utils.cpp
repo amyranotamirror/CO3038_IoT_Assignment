@@ -17,7 +17,6 @@ void GiveMutex(SemaphoreHandle_t mutex, const char* tag) {
         xSemaphoreGive(mutex);
     } else {
         LogWarn(tag, "Tried to give null mutex");
-        Serial.print("[WARN] Tried to give null mutex for "); Serial.println(tag);
     }
 }
 

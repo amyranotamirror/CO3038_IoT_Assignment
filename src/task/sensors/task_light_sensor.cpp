@@ -37,16 +37,15 @@ void TaskLightSensor(void *pvParameters) {
       if (lightSensorState.connectionAttempt < SensorConfig::maxConnectionAttemptBH1750) {
         lightSensorState.connectionAttempt++;
         LogWarn("Light Sensor", "Measurement not ready, retrying ...");
-        GiveMutex(lightSensorState.mutex, "Light sensor");
+        GiveMutex(lightSensorState.mutex, "Light Sensor");
         vTaskDelay(SensorConfig::connectAttemptBH1750Interval); // Use small interval for retry
-        continue;
       } else {
         LogError("Light Sensor", "Failed to read after max attempts.");
         lightSensorState.connectionAttempt = 0;
-        GiveMutex(lightSensorState.mutex, "Light sensor");
+        GiveMutex(lightSensorState.mutex, "Light Sensor");
         vTaskDelay(SensorConfig::readBH1750Interval); // Use normal interval for retry
-        continue;
       }
+      continue;
     }
 
     // Read the light level

@@ -71,10 +71,10 @@ struct SensorConfig {
     static constexpr uint32_t readBH1750Interval = SystemConfig::defaultTaskDelay * 5;
     static constexpr uint32_t readMQ135Interval = SystemConfig::defaultTaskDelay * 5;
 
-    static constexpr uint32_t connectAttemptDHT20Interval = SystemConfig::smallTaskDelay;
-    static constexpr uint32_t connectAttemptLD2410Interval = SystemConfig::smallTaskDelay;
-    static constexpr uint32_t connectAttemptBH1750Interval = SystemConfig::smallTaskDelay;
-    static constexpr uint32_t connectAttemptMQ135Interval = SystemConfig::smallTaskDelay;
+    static constexpr uint32_t connectAttemptDHT20Interval = SystemConfig::defaultTaskDelay;
+    static constexpr uint32_t connectAttemptLD2410Interval = SystemConfig::defaultTaskDelay;
+    static constexpr uint32_t connectAttemptBH1750Interval = SystemConfig::defaultTaskDelay;
+    static constexpr uint32_t connectAttemptMQ135Interval = SystemConfig::defaultTaskDelay;
 };
 
 struct ActuatorConfig {
