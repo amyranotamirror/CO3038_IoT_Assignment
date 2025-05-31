@@ -13,11 +13,11 @@ struct SystemConfig {
 };
 struct WiFiConfig {
     // Amyra 2.4GHz WiFi
-    // static constexpr const char* wifiSSID = "AMYRANGUYEN 2995";
-    // static constexpr const char* wifiPassword = "@s0T5278";
+    static constexpr const char* wifiSSID = "AMYRANGUYEN 2995";
+    static constexpr const char* wifiPassword = "@s0T5278";
     // Harw 2.4GHz WiFi
-    static constexpr const char* wifiSSID = "Harw";
-    static constexpr const char* wifiPassword = "baohan1107";
+    // static constexpr const char* wifiSSID = "Harw";
+    // static constexpr const char* wifiPassword = "baohan1107";
 
     static constexpr uint16_t maxConnectionAttempt = 20U;
     //Timing
@@ -31,7 +31,8 @@ struct MessageConfig {
 
 struct ThingsBoardConfig {
     // Token
-    static constexpr const char* token = "EUhiYO2k6GAw35PIHa0K";
+    // static constexpr const char* token = "EUhiYO2k6GAw35PIHa0K"; // Training room 1
+    static constexpr const char* token = "aS2UTXnwxrgjfzSY4oRw"; // Training room 2
     // Server
     static constexpr const char* server = "app.coreiot.io";
     static constexpr uint16_t port = 1883U; 
@@ -53,7 +54,7 @@ struct RPCAttributeConfig {
 };
 struct OTAConfig {
     static constexpr const char* title = "SMART_OFFICE";
-    static constexpr const char* version = "2.0";
+    static constexpr const char* version = "8.0";
     static constexpr uint8_t maxFailureAttempt = 12U;
     static constexpr uint16_t firmwarePacketSize = 4096U;
     // Timing

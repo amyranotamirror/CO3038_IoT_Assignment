@@ -11,7 +11,7 @@ void LogWarn(const char* tag, const char* message);
 void LogInfo(const char* tag, const char* message);
 void LogSuccess(const char* tag, const char* message);
 
-void LogUpdate(const char* tag, const char* message, const char* value);
+void LogUpdate(const char* tag, const char* message, const char* value, const char* unit);
 
 void LogRead(const char* key, const char* value, const char* unit);
 void LogSend(const char* key, const char* value);

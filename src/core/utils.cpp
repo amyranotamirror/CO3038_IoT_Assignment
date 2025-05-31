@@ -37,8 +37,8 @@ void LogSuccess(const char* tag, const char* message) {
     Serial.print("[SUCCESS] "); Serial.print(tag); Serial.print(": "); Serial.println(message);
 }
 
-void LogUpdate(const char* tag, const char* message, const char* value) {
-    Serial.print("[UPDATE] "); Serial.print(tag); Serial.print(": "); Serial.print(message); Serial.println(value);
+void LogUpdate(const char* tag, const char* message, const char* value, const char* unit) {
+    Serial.print("[UPDATE] "); Serial.print(tag); Serial.print(": "); Serial.print(message); Serial.print(" "); Serial.print(value); Serial.print(" "); Serial.println(unit);
 }
 
 void LogRead(const char* key, const char* value, const char* unit) {

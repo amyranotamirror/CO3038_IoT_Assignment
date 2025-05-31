@@ -27,7 +27,7 @@ void SetLightActuatorStatus(JsonPairConst json) {
     digitalWrite(ActuatorConfig::lightPin1, OFF);
     break;
   }
-  LogUpdate("Light mode", "updated to ", String(lightActuatorState.mode).c_str());
+  LogUpdate("Light mode", "updated to", String(lightActuatorState.mode).c_str(), "");
 }
 
 // void RPCLightActuatorControl(const JsonVariantConst& variant, JsonDocument& document) {

@@ -18,37 +18,65 @@ void TaskThingsBoard(void *pvParameters) {
       thingsBoardState.isConnected = false;
       thingsBoardState.isAttempting = false;
       thingsBoardState.connectionAttempts = 0;
-      // RPC
-      server_rpc.RPC_Unsubscribe();
-      thingsBoardState.isServerRPC = false;
       // Shared attributes
-      attr_update.Shared_Attributes_Unsubscribe();
-      thingsBoardState.isSharedAttributesUpdated = false;
       thingsBoardState.isSharedAttributesRequested = false;
       thingsBoardState.isSharedAttributesRequestProcessed = false;
+      // OTA
+      thingsBoardState.isOTACurrentFirmwareSent = false;
     } else {
       if (thingsboard.connected()) {
         if (!thingsBoardState.isConnected) {
           Serial.println();
           LogInfo("ThingsBoard", "Established connection");
-          // RPC
-          if (!thingsBoardState.isServerRPC) {
-            thingsBoardState.isServerRPC = server_rpc.RPC_Subscribe(callbacks.cbegin(), callbacks.cend());
-            LogInfo("Server RPC subscribed", thingsBoardState.isServerRPC ? "succeeded" : "failed");
-          }
-          // Shared attributes
-          if (!thingsBoardState.isSharedAttributesUpdated) {
-            thingsBoardState.isSharedAttributesUpdated = attr_update.Shared_Attributes_Subscribe(shared_attribute_callback);
-            LogInfo("Shared attributes updated", thingsBoardState.isSharedAttributesUpdated ? "succeeded" : "failed");
-          }
-          if (!thingsBoardState.isSharedAttributesRequested) {
-            thingsBoardState.isSharedAttributesRequested = attr_request.Shared_Attributes_Request(attribute_request_callback);
-            LogInfo("Shared attributes requested", thingsBoardState.isSharedAttributesRequested ? "succeeded" : "failed");
-          }
         }
         thingsBoardState.isConnected = true;
         thingsBoardState.isAttempting = false;
         thingsBoardState.connectionAttempts = 0;
+// RPC
+if (!thingsBoardState.isServerRPC) {
+  thingsBoardState.isServerRPC = server_rpc.RPC_Subscribe(callbacks.cbegin(), callbacks.cend());
+  if (thingsBoardState.isServerRPC) {
+    LogSuccess("Server RPC", "subscribed successfully");
+  } else {
+    LogError("Server RPC", "can not subscribed");
+  }
+}
+// Shared attributes
+if (!thingsBoardState.isSharedAttributesUpdated) {
+  thingsBoardState.isSharedAttributesUpdated = attr_update.Shared_Attributes_Subscribe(shared_attribute_callback);
+  if (thingsBoardState.isSharedAttributesUpdated) {
+    LogSuccess("Shared attributes", "updated successfully");
+  } else {
+    LogError("Shared attributes", "can not updated");
+  }
+}
+if (!thingsBoardState.isSharedAttributesRequested) {
+  thingsBoardState.isSharedAttributesRequested = attr_request.Shared_Attributes_Request(attribute_request_callback);
+  if (thingsBoardState.isSharedAttributesRequested) {
+    LogSuccess("Shared attributes", "requested successfully");
+  } else {
+    LogError("Shared attributes", "can not requested");
+  }
+}
+// OTA
+if (thingsBoardState.isSharedAttributesRequestProcessed) {
+  if (!thingsBoardState.isOTACurrentFirmwareSent) {
+    thingsBoardState.isOTACurrentFirmwareSent = ota.Firmware_Send_Info(OTAConfig::title, OTAConfig::version);
+    if (thingsBoardState.isOTACurrentFirmwareSent) {
+      LogSuccess("OTA current firmware", "sent successfully");
+    } else {
+      LogError("OTA current firmware", "can not sent");
+    }
+  }
+  if (!thingsBoardState.isOTAUpdateRequestSent) {
+    thingsBoardState.isOTAUpdateRequestSent = ota.Subscribe_Firmware_Update(ota_update_callback);
+    if (thingsBoardState.isOTAUpdateRequestSent) {
+      LogSuccess("OTA update request", "sent successfully");
+    } else {
+      LogError("OTA update request", "can not sent");
+    }
+  }
+}
       } else {
         if (!thingsBoardState.isAttempting) {
           Serial.print("[UPDATE] ThingsBoard: Connecting ...");

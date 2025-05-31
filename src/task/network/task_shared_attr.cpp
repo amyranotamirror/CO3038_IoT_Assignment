@@ -29,5 +29,5 @@ void processSharedAttributeRequest(const JsonObjectConst &data) {
   LogInfo("Attribute request callback", buffer);
   processSharedAttributes(data);
   thingsBoardState.isSharedAttributesRequestProcessed = true;
-  LogInfo("Shared attributes request proccessed", "succeeded");
+  LogSuccess("Shared attributes", "request proccessed successfully");
 }

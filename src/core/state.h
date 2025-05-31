@@ -21,14 +21,9 @@ struct ThingsBoardState {
     bool isSharedAttributesUpdated;
     bool isSharedAttributesRequested;
     bool isSharedAttributesRequestProcessed;
+    bool isOTACurrentFirmwareSent;
+    bool isOTAUpdateRequestSent;
 };
-
-struct {
-    bool shared_update_subscribed = false;
-    bool currentFWSent = false;
-    bool updateRequestSent = false;
-    bool requestedShared = false;
-} otaUpdateState;
 
 struct AirQualitySensorState {
     uint16_t connectionAttempt;         // Refer SensorConfig::maxConnectionAttemptMHZ19

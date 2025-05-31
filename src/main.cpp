@@ -2,12 +2,13 @@
 #include <Wire.h>
 #include <MQ135.h>
 
-#include "task/network/task_wifi.h"
-#include "task/network/task_thingsboard.h"
+#include "task/network/task_ota.h"
 #include "task/network/task_rpc.h"
 #include "task/network/task_shared_attr.h"
 #include "task/network/task_telemetry.h"
-#include "task/ota/task_ota.h"
+#include "task/network/task_thingsboard.h"
+#include "task/network/task_wifi.h"
+
 #include "task/sensors/task_air_quality_sensor.h"
 #include "task/sensors/task_light_sensor.h"
 #include "task/sensors/task_motion_sensor.h"
@@ -40,10 +41,9 @@ void InitSystem(){
   xTaskCreate(TaskWiFi, "WiFi", 4096U, NULL, 2, NULL);
   xTaskCreate(TaskThingsBoard, "ThingsBoard", 4096U, NULL, 2, NULL);
   xTaskCreate(TaskThingsBoardLoop, "ThingsBoardLoop", 4096U, NULL, 2, NULL);
-  xTaskCreate(TaskOTAUpdate, "OTAUpdate", 4096U, NULL, 1, NULL);
 
-  // xTaskCreate(TaskLightSensor, "LightSensor", 4096U, NULL, 2, NULL);
-  // xTaskCreate(TaskTelemetry, "Telemetry", 4096U, NULL, 2, NULL);
+  xTaskCreate(TaskLightSensor, "LightSensor", 4096U, NULL, 2, NULL);
+  xTaskCreate(TaskTelemetry, "Telemetry", 4096U, NULL, 2, NULL);
   // xTaskCreate(TaskTest, "Test", 4096U, NULL, 2, NULL);
 }
 
@@ -54,7 +54,7 @@ void setup() {
   // something
   Serial.begin(SystemConfig::serialDebugBaud);
   Serial.println();
-  Serial.println("\n=== IOT ASSIGNMENT: SMART OFFICE ===");
+  Serial.printf("\n=== IOT_ASSIGNMENT: %s_%s ===\n", OTAConfig::title, OTAConfig::version);
   Wire.begin(GPIO_NUM_21, GPIO_NUM_22);
 
   // something

@@ -11,6 +11,7 @@
 #include <ThingsBoard.h>
 #include <WiFi.h>
 
+#include "task_ota.h"
 #include "task_rpc.h"
 #include "task_shared_attr.h"
 #include "task_wifi.h"
