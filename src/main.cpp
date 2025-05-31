@@ -13,8 +13,10 @@
 #include "task/sensors/task_light_sensor.h"
 #include "task/sensors/task_motion_sensor.h"
 #include "task/sensors/task_temp_humid_sensor.h"
-#include "task/actuators/task_light.h"
+
+#include "task/actuators/task_alert.h"
 #include "task/actuators/task_buzzer.h"
+#include "task/actuators/task_light.h"
 
 // MQ135 airQualitySensor = MQ135(GPIO_NUM_39);
 // void TaskTest(void *pvParameters) {
@@ -30,8 +32,9 @@ void InitSystem(){
   InitWiFi();
 
   // Init actuators
-  InitLight();
+  InitAlert();
   InitBuzzer();
+  InitLight();
   
   // Init sensors
   // InitLightSensor();
@@ -45,6 +48,9 @@ void InitSystem(){
   xTaskCreate(TaskLightSensor, "LightSensor", 4096U, NULL, 2, NULL);
   xTaskCreate(TaskTelemetry, "Telemetry", 4096U, NULL, 2, NULL);
   // xTaskCreate(TaskTest, "Test", 4096U, NULL, 2, NULL);
+
+  xTaskCreate(TaskBuzzer, "Buzzer", 4096U, NULL, 2, NULL);
+  xTaskCreate(TaskAlert, "Alert", 4096U, NULL, 2, NULL);
 }
 
 /* ========================================================================== */

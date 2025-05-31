@@ -16,7 +16,4 @@ void InitLight();
 // Shared attributes for toggling light
 void SetLightActuatorStatus(JsonPairConst json);
 
-// RPC handler for toggling light
-void RPCLightActuatorControl(const JsonVariantConst& variant, JsonDocument& document);
-
 #endif

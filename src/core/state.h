@@ -48,12 +48,12 @@ struct LightActuatorState {
     uint8_t mode;
 };
 
-struct {
-    bool status = ON;
-} buzzerState;
-struct {
-    bool status = ON;
-} alertState;
+struct BuzzerState {
+    bool status;
+};
+struct AlertState {
+    bool status;
+};
 
 extern volatile WifiState wifiState;
 extern volatile ThingsBoardState thingsBoardState;
@@ -64,5 +64,10 @@ extern volatile LightSensorState lightSensorState;
 extern volatile MotionSensorState motionSensorState;
 
 extern volatile LightActuatorState lightActuatorState;
+
+extern volatile BuzzerState buzzerState;
+extern volatile AlertState alertState;
+
+bool isSystemReady();
 
 #endif

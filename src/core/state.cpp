@@ -9,3 +9,10 @@ volatile MotionSensorState motionSensorState = {0, NAN};
 volatile TempHumidSensorState tempHumidSensorState = {0, NAN, NAN};
 
 volatile LightActuatorState lightActuatorState = {0};
+
+volatile BuzzerState buzzerState = {OFF};
+volatile AlertState alertState = {OFF};
+
+bool isSystemReady() {
+    return wifiState.isConnected && thingsBoardState.isConnected && thingsBoardState.isServerRPC && thingsBoardState.isSharedAttributesUpdated && thingsBoardState.isSharedAttributesRequested && thingsBoardState.isSharedAttributesRequestProcessed && thingsBoardState.isOTACurrentFirmwareSent && thingsBoardState.isOTAUpdateRequestSent;
+}

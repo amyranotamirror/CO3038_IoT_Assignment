@@ -6,14 +6,14 @@
 #include <RPC_Request_Callback.h>
 #include <ThingsBoard.h>
 
-// #include "../actuators/task_air_cond.h"
+#include "../actuators/task_alert.h"
 #include "../actuators/task_buzzer.h"
-// #include "../actuators/task_curtain.h"
-// #include "../actuators/task_relay.h"
 #include "../network/task_thingsboard.h"
 
 // Define your ThingsBoard RPC callback type
 extern const std::array<RPC_Request_Callback, 1U> rpc_request_callbacks;
 extern const std::array<RPC_Callback, 1U> rpc_callbacks;
+
+void processRPC(const JsonVariantConst& variant, JsonDocument& document);
 
 #endif

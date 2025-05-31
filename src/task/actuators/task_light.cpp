@@ -29,25 +29,3 @@ void SetLightActuatorStatus(JsonPairConst json) {
   }
   LogUpdate("Light mode", "updated to", String(lightActuatorState.mode).c_str(), "");
 }
-
-// void RPCLightActuatorControl(const JsonVariantConst& variant, JsonDocument& document) {
-//   Serial.println("If I did then she would want to be my girlfriend...");
-//   const size_t jsonSize = Helper::Measure_Json(variant);
-//   char buffer[jsonSize];
-//   serializeJson(variant, buffer, jsonSize);
-//   Serial.println(buffer);
-//   if (variant.containsKey("lightActuatorMode")) {
-//     lightActuatorState.status = variant["lightActuatorMode"].as<bool>();
-//     digitalWrite(ActuatorConfig::lightPin, lightActuatorState.status);
-//  }
-// }
-
-void RPCLightActuatorControl(const JsonVariantConst& variant, JsonDocument& document) {
-  Serial.println("RPCLightActuatorControl is called");
-  const size_t jsonSize = Helper::Measure_Json(variant);
-  char buffer[jsonSize];
-  serializeJson(variant, buffer, jsonSize);
-  Serial.println(buffer);
-  alertState.status = variant.as<bool>();
-  digitalWrite(ActuatorConfig::lightPin, alertState.status);
-}
