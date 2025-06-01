@@ -39,12 +39,16 @@ struct MotionSensorState {
     double motionDetected;
 };
 struct TempHumidSensorState {
-    uint16_t connectionAttempt;        // Refer SensorConfig::maxConnectionAttemptDHT20
+    volatile SemaphoreHandle_t mutex;
+    uint16_t connectionAttempt;        // Refer SensorConfig::maxConnectionAttemptDHT22
     double temperature;
     double humidity;
 };
 
 struct LightActuatorState {
+    uint8_t mode;
+};
+struct CurtainActuatorState {
     uint8_t mode;
 };
 
@@ -64,6 +68,7 @@ extern volatile LightSensorState lightSensorState;
 extern volatile MotionSensorState motionSensorState;
 
 extern volatile LightActuatorState lightActuatorState;
+extern volatile CurtainActuatorState curtainActuatorState;
 
 extern volatile BuzzerState buzzerState;
 extern volatile AlertState alertState;

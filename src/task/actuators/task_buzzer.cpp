@@ -9,7 +9,7 @@ Buzzer::Melody_t melody = {
 Buzzer buzzer;
 
 void InitBuzzer(){
-    buzzer.init(ActuatorConfig::buzzerPin);
+    buzzer.init(ActuatorConfig::buzzerPin, ActuatorConfig::buzzerPWMChannel);
 }
 
 void TaskBuzzer(void *pvParameters){

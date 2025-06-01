@@ -69,20 +69,23 @@ struct SensorConfig {
     static constexpr const char* motionKey = "motion";
     static constexpr const char* co2Key = "co2";
 
-    static constexpr uint16_t maxConnectionAttemptDHT20 = 20U;
+    static constexpr uint16_t maxConnectionAttemptDHT22 = 20U;
     static constexpr uint16_t maxConnectionAttemptLD2410 = 20U;
     static constexpr uint16_t maxConnectionAttemptBH1750 = 20U;
     static constexpr uint16_t maxConnectionAttemptMQ135 = 20U;
     // Timing
-    static constexpr uint32_t readDHT20Interval = SystemConfig::defaultTaskDelay * 5;
+    static constexpr uint32_t readDHT22Interval = SystemConfig::defaultTaskDelay * 5;
     static constexpr uint32_t readLD2410Interval = SystemConfig::defaultTaskDelay * 5;
     static constexpr uint32_t readBH1750Interval = SystemConfig::defaultTaskDelay * 5;
     static constexpr uint32_t readMQ135Interval = SystemConfig::defaultTaskDelay * 5;
 
-    static constexpr uint32_t connectAttemptDHT20Interval = SystemConfig::defaultTaskDelay;
+    static constexpr uint32_t connectAttemptDHT22Interval = SystemConfig::defaultTaskDelay;
     static constexpr uint32_t connectAttemptLD2410Interval = SystemConfig::defaultTaskDelay;
     static constexpr uint32_t connectAttemptBH1750Interval = SystemConfig::defaultTaskDelay;
     static constexpr uint32_t connectAttemptMQ135Interval = SystemConfig::defaultTaskDelay;
+
+    static constexpr gpio_num_t DHT20Pin = GPIO_NUM_27
+    ;
 };
 
 struct ActuatorConfig {
@@ -91,10 +94,14 @@ struct ActuatorConfig {
     static constexpr const char* buzzerKey = "buzzer";
     static constexpr const char* indicatorLightKey = "indicator";
 
-    static constexpr uint16_t lightPin0 = GPIO_NUM_18;
-    static constexpr uint16_t lightPin1 = GPIO_NUM_19;
-    static constexpr uint16_t alertPin = GPIO_NUM_23;
-    static constexpr uint8_t buzzerPin = GPIO_NUM_5;
+    static constexpr gpio_num_t lightPin0 = GPIO_NUM_18;
+    static constexpr gpio_num_t lightPin1 = GPIO_NUM_19;
+    static constexpr gpio_num_t curtainPin = GPIO_NUM_23;
+    static constexpr uint8_t curtainPWMChannel = 2;
+
+    static constexpr gpio_num_t buzzerPin = GPIO_NUM_5;
+    static constexpr uint8_t buzzerPWMChannel = 1;
+    static constexpr gpio_num_t alertPin = GPIO_NUM_13;
 };
 
 #endif

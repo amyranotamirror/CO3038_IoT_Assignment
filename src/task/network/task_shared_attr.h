@@ -7,10 +7,11 @@
 
 #include "./core/state.h"
 #include "./core/utils.h"
+#include "../actuators/task_curtain.h"
 #include "../actuators/task_light.h"
 #include "../network/task_thingsboard.h"
 
-constexpr std::array<const char *, 1U> shared_attribute_list = {"lightActuatorMode"};
+constexpr std::array<const char *, 2U> shared_attribute_list = {"curtainActuatorMode", "lightActuatorMode"};
 extern const Shared_Attribute_Callback<RPCAttributeConfig::maxAttribute> shared_attribute_callback;
 extern const Attribute_Request_Callback<RPCAttributeConfig::maxAttribute> attribute_request_callback;
 
