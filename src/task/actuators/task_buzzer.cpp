@@ -9,7 +9,9 @@ Buzzer::Melody_t melody = {
 Buzzer buzzer;
 
 void InitBuzzer(){
+    LogInfo("Buzzer actuator", "initializing ...");
     buzzer.init(ActuatorConfig::buzzerPin, ActuatorConfig::buzzerPWMChannel);
+    LogSuccess("Buzzer actuator", "initialized successfully");
 }
 
 void TaskBuzzer(void *pvParameters){

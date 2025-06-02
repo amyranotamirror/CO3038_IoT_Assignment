@@ -3,8 +3,10 @@
 Servo curtain;
 
 void InitCurtain() {
+  LogInfo("Curtain actuator", "initializing ...");
   curtain.attach(ActuatorConfig::curtainPin, ActuatorConfig::curtainPWMChannel);
   curtain.write(0);
+  LogSuccess("Curtain actuator", "initialized successfully");
 }
 
 void SetCurtainActuatorStatus(JsonPairConst json) {

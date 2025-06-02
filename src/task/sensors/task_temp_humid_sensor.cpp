@@ -4,55 +4,59 @@ DHT tempHumidSensor;
 
 void InitTempHumidSensor() {
   // Initialize the temperature humidity sensor with default settings
-  LogInfo("Temperature Humidity Sensor", "Initializing ...");
+  LogInfo("Temperature humidity sensor", "initializing ...");
   tempHumidSensor.setup(SensorConfig::DHT20Pin);
 
   // Initialize the temperature humidity sensor mutex
-  tempHumidSensorState.mutex = xSemaphoreCreateMutex();
   if (tempHumidSensorState.mutex == nullptr) {
-    LogError("Temperature Humidity Sensor", "Failed to create mutex");
-    return;
+    tempHumidSensorState.mutex = xSemaphoreCreateMutex();
+    if (tempHumidSensorState.mutex == nullptr) {
+      LogError("Temperature humidity sensor", "failed to create mutex");
+      return;
+    } else {
+      LogSuccess("Temperature humidity sensor", "created mutex");
+    }
   }
 
   // Initialize the temperature humidity sensor state
+  tempHumidSensorState.isConnected = true;
   tempHumidSensorState.connectionAttempt = 0;
   tempHumidSensorState.temperature = NAN;
   tempHumidSensorState.humidity = NAN;
-  LogSuccess("Temperature Humidity Sensor", "Initialized successfully");
+  LogSuccess("Temperature humidity sensor", "initialized successfully");
 }
 
 void TaskTempHumidSensor(void *pvParameters) {
   while(1) {
-    // Check if the temperature humidity sensor has been initialized
-    if (!TakeMutex(tempHumidSensorState.mutex, SystemConfig::mutexWaitTicks, "Temperature Humidity Sensor")) {
-      InitTempHumidSensor();
-      vTaskDelay(SensorConfig::readDHT22Interval); // Use normal interval for retry
-      continue;
+    if (isSystemReady()) {
+      // Check if the temperature humidity sensor has been initialized
+      if (!tempHumidSensorState.isConnected) {
+        LogError("Temperature humidity sensor", "disconnected");
+        InitTempHumidSensor();
+      }
+      if (tempHumidSensorState.isConnected) {
+        // Read the temperature humidity level
+        double newTemperature = tempHumidSensor.getTemperature();
+        double newHumidity = tempHumidSensor.getHumidity();
+        LogRead(SensorConfig::temperatureKey, String(newTemperature, 4).c_str(), "°C");
+        LogRead(SensorConfig::humidityKey, String(newHumidity, 4).c_str(), "%");
+        TakeMutex(tempHumidSensorState.mutex, SystemConfig::mutexWaitTicks, "Temperature humidity sensor");
+        if (newTemperature < 0 || newHumidity < 0 || isnan(newTemperature) || isnan(newHumidity)) {
+          if (tempHumidSensorState.connectionAttempt < SensorConfig::maxConnectionAttemptDHT22) {
+            tempHumidSensorState.connectionAttempt ++;
+            LogWarn("Temperature humidity sensor", "measurement failed, retrying ...");
+          } else {
+            tempHumidSensorState.isConnected = false;
+            LogError("Temperature humidity sensor", "failed to read after max attempts");
+          }
+        } else {
+          tempHumidSensorState.connectionAttempt = 0;
+        }
+        tempHumidSensorState.temperature = newTemperature;
+        tempHumidSensorState.humidity = newHumidity;
+        GiveMutex(tempHumidSensorState.mutex, "Temperature humidity sensor");
+      }
+      vTaskDelay(SensorConfig::readDHT22Interval); // Use normal interval for next read
     }
-    
-    // // Check if the temperature humidity sensor is ready for measurement
-    // if (!lightSensor.measurementReady()) {
-    //   if (lightSensorState.connectionAttempt < SensorConfig::maxConnectionAttemptBH1750) {
-    //     lightSensorState.connectionAttempt++;
-    //     LogWarn("Light Sensor", "Measurement not ready, retrying ...");
-    //     GiveMutex(lightSensorState.mutex, "Light Sensor");
-    //     vTaskDelay(SensorConfig::connectAttemptBH1750Interval); // Use small interval for retry
-    //   } else {
-    //     LogError("Light Sensor", "Failed to read after max attempts.");
-    //     lightSensorState.connectionAttempt = 0;
-    //     GiveMutex(lightSensorState.mutex, "Light Sensor");
-    //     vTaskDelay(SensorConfig::readBH1750Interval); // Use normal interval for retry
-    //   }
-    //   continue;
-    // }
-
-    // Read the temperature humidity level
-    tempHumidSensorState.temperature = tempHumidSensor.getTemperature();
-    tempHumidSensorState.humidity = tempHumidSensor.getHumidity();
-    LogRead(SensorConfig::temperatureKey, String(tempHumidSensorState.temperature, 4).c_str(), "°C");
-    LogRead(SensorConfig::humidityKey, String(tempHumidSensorState.humidity, 4).c_str(), "%");
-    GiveMutex(tempHumidSensorState.mutex, "Temperature Humidity Sensor");
-
-    vTaskDelay(SensorConfig::readDHT22Interval); // Use normal interval for next read
   }
 }

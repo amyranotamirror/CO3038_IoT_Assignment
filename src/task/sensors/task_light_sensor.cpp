@@ -3,13 +3,29 @@
 BH1750 lightSensor;
 
 void InitLightSensor() {
-  // Initialize the light sensor mutex
-  lightSensorState.mutex = xSemaphoreCreateMutex();
-  if (lightSensorState.mutex == nullptr) {
-    LogError("Light sensor", "Failed to create mutex");
-  } else {
-    LogSuccess("Light sensor", "Created mutex");
+  // Initialize the light sensor with default settings
+  LogInfo("Light sensor", "initializing ...");
+  if (!lightSensor.begin()) {
+    LogError("Light sensor", "failed to initialize");
+    return;
   }
+
+  // Initialize the light sensor mutex
+  if (lightSensorState.mutex == nullptr) {
+    lightSensorState.mutex = xSemaphoreCreateMutex();
+    if (lightSensorState.mutex == nullptr) {
+      LogError("Light sensor", "failed to create mutex");
+      return;
+    } else {
+      LogSuccess("Light sensor", "created mutex");
+    }
+  }
+
+  // Initialize the light sensor state
+  lightSensorState.isConnected = true;
+  lightSensorState.connectionAttempt = 0;
+  lightSensorState.brightness = NAN;
+  LogSuccess("Light sensor", "initialized successfully");
 }
 
 void TaskLightSensor(void *pvParameters) {
@@ -17,33 +33,26 @@ void TaskLightSensor(void *pvParameters) {
     if (isSystemReady()) {
       // Check if the light sensor has been initialized
       if (!lightSensorState.isConnected) {
-        // Initialize the light sensor with default settings
-        LogInfo("Light sensor", "Initializing ...");
-        if (!lightSensor.begin()) {
-          LogError("Light sensor", "Failed to initialize");
-        } else {
-          // Initialize the light sensor state
-          lightSensorState.isConnected = true;
-          lightSensorState.connectionAttempt = 0;
-          lightSensorState.brightness = NAN;
-          LogSuccess("Light sensor", "Initialized successfully");
-        }
-      } else {
-        TakeMutex(lightSensorState.mutex, SystemConfig::mutexWaitTicks, "Light Sensor");
+        LogError("Light sensor", "disconnected");
+        InitLightSensor();
+      }
+      if (lightSensorState.isConnected) {
         // Read the light level
         double newBrightness = lightSensor.readLightLevel();
-        if (newBrightness < 0) {
+        LogRead(SensorConfig::brightnessKey, String(newBrightness, 4).c_str(), "lux");
+        TakeMutex(lightSensorState.mutex, SystemConfig::mutexWaitTicks, "Light sensor");
+        if (newBrightness < 0 || isnan(newBrightness)) {
           if (lightSensorState.connectionAttempt < SensorConfig::maxConnectionAttemptBH1750) {
             lightSensorState.connectionAttempt ++;
-            LogWarn("Light sensor", "Measurement failed, retrying ...");
+            LogWarn("Light sensor", "measurement failed, retrying ...");
           } else {
             lightSensorState.isConnected = false;
-            LogError("Light sensor", "Failed to read after max attempts");
+            LogError("Light sensor", "failed to read after max attempts");
           }
         } else {
-          lightSensorState.brightness = newBrightness;
-          LogRead(SensorConfig::brightnessKey, String(lightSensorState.brightness, 4).c_str(), "lux");
+          lightSensorState.connectionAttempt = 0;
         }
+        lightSensorState.brightness = newBrightness;
         GiveMutex(lightSensorState.mutex, "Light sensor");
       }
       vTaskDelay(SensorConfig::readBH1750Interval); // Use normal interval for next read

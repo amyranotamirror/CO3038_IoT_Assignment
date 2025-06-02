@@ -1,8 +1,10 @@
 #include "task_alert.h"
 
 void InitAlert() {
+  LogInfo("Alert actuator", "initializing ...");
   pinMode(ActuatorConfig::alertPin, OUTPUT);
   digitalWrite(ActuatorConfig::alertPin, OFF);
+  LogSuccess("Alert actuator", "initialized successfully");
 }
 
 void TaskAlert(void *pvParameters) {

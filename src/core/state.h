@@ -40,6 +40,7 @@ struct MotionSensorState {
     double motionDetected;
 };
 struct TempHumidSensorState {
+    bool isConnected;
     volatile SemaphoreHandle_t mutex;
     uint16_t connectionAttempt;        // Refer SensorConfig::maxConnectionAttemptDHT22
     double temperature;

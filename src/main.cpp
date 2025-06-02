@@ -78,9 +78,6 @@ void TaskTest(void *pvParameters) {
 }
 
 void InitSystem(){
-  // Init connection
-  InitWiFi();
-
   // Init actuators
   InitAlert();
   InitBuzzer();
@@ -89,22 +86,25 @@ void InitSystem(){
   
   // Init sensors
   InitLightSensor();
-  // InitTempHumidSensor();
+  InitTempHumidSensor();
   // bool check = motion.begin();
   // Serial.print("This is another check value "); Serial.print(check); Serial.println(" ok.");
+
+  // Init connection
+  InitWiFi();
 
   // Create RTOS tasks
   xTaskCreate(TaskWiFi, "WiFi", 4096U, NULL, 2, NULL);
   xTaskCreate(TaskThingsBoard, "ThingsBoard", 4096U, NULL, 2, NULL);
   xTaskCreate(TaskThingsBoardLoop, "ThingsBoardLoop", 4096U, NULL, 2, NULL);
 
-  xTaskCreate(TaskLightSensor, "LightSensor", 4096U, NULL, 2, NULL);
-  // xTaskCreate(TaskTempHumidSensor, "TempHumidSensor", 4096U, NULL, 2, NULL);
-  xTaskCreate(TaskTelemetry, "Telemetry", 4096U, NULL, 2, NULL);
-  // xTaskCreate(TaskTest, "Test", 4096U, NULL, 3, NULL);
+  xTaskCreate(TaskLightSensor, "LightSensor", 4096U, NULL, 3, NULL);
+  xTaskCreate(TaskTempHumidSensor, "TempHumidSensor", 4096U, NULL, 3, NULL);
+  xTaskCreate(TaskTelemetry, "Telemetry", 4096U, NULL, 4, NULL);
 
   xTaskCreate(TaskBuzzer, "Buzzer", 4096U, NULL, 2, NULL);
   xTaskCreate(TaskAlert, "Alert", 4096U, NULL, 2, NULL);
+  // xTaskCreate(TaskTest, "Test", 4096U, NULL, 3, NULL);
 }
 
 /* ========================================================================== */

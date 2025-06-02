@@ -1,10 +1,12 @@
 #include "task_light.h"
 
 void InitLight() {
+  LogInfo("Light actuator", "initializing ...");
   pinMode(ActuatorConfig::lightPin0, OUTPUT);
   pinMode(ActuatorConfig::lightPin1, OUTPUT);
   digitalWrite(ActuatorConfig::lightPin0, OFF);
   digitalWrite(ActuatorConfig::lightPin1, OFF);
+  LogSuccess("Light actuator", "initialized successfully");
 }
 
 void SetLightActuatorStatus(JsonPairConst json) {

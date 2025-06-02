@@ -26,7 +26,7 @@ void TaskThingsBoard(void *pvParameters) {
     } else {
       if (thingsboard.connected()) {
         if (!thingsBoardState.isConnected) {
-          LogInfo("ThingsBoard", "Established connection");
+          LogInfo("ThingsBoard", "established connection");
         }
         thingsBoardState.isConnected = true;
         thingsBoardState.isAttempting = false;
@@ -83,7 +83,7 @@ void TaskThingsBoard(void *pvParameters) {
         }
       } else {
         if (!thingsBoardState.isAttempting) {
-          LogInfo("ThingsBoard", "Connecting ...");
+          LogInfo("ThingsBoard", "connecting ...");
           thingsboard.disconnect();
           thingsboard.connect(ThingsBoardConfig::server, ThingsBoardConfig::token, ThingsBoardConfig::port);
           thingsBoardState.isAttempting = true;
@@ -91,7 +91,7 @@ void TaskThingsBoard(void *pvParameters) {
         } else {
           thingsBoardState.connectionAttempts++;
           if (thingsBoardState.connectionAttempts >= ThingsBoardConfig::maxConnectionAttempt) {
-            LogError("ThingsBoard", "Failed to connect after max attempts");
+            LogError("ThingsBoard", "failed to connect after max attempts");
             WiFi.disconnect();
             thingsBoardState.isAttempting = false;
           }
