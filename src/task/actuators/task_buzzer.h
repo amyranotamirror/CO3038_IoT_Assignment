@@ -2,6 +2,7 @@
 #define TASK_BUZZER_H
 
 #include <Buzzer.h>
+
 #include "./core/config.h"
 #include "./core/state.h"
 #include "./core/utils.h"

@@ -1,10 +1,11 @@
 #ifndef CURTAIN_H
 #define CURTAIN_H
 
+#include <Servo.h>
+
 #include "./core/config.h"
 #include "./core/state.h"
 #include "./core/utils.h"
-#include <Servo.h>
 
 extern Servo curtain;
 

@@ -1,7 +1,6 @@
 #ifndef TASK_SHARED_ATTR_H
 #define TASK_SHARED_ATTR_H
 
-#include <Attribute_Request.h>
 #include <Attribute_Request_Callback.h>
 #include <Shared_Attribute_Callback.h>
 
@@ -9,7 +8,6 @@
 #include "./core/utils.h"
 #include "../actuators/task_curtain.h"
 #include "../actuators/task_light.h"
-#include "../network/task_thingsboard.h"
 
 constexpr std::array<const char *, 2U> shared_attribute_list = {"curtainActuatorMode", "lightActuatorMode"};
 extern const Shared_Attribute_Callback<RPCAttributeConfig::maxAttribute> shared_attribute_callback;
