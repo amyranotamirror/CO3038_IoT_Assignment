@@ -8,8 +8,8 @@ void InitCurtain() {
 }
 
 void SetCurtainActuatorStatus(JsonPairConst json) {
-  curtainActuatorState.mode = json.value().as<uint8_t>();
-  switch (curtainActuatorState.mode) {
+  uint8_t newMode = json.value().as<uint8_t>();
+  switch (newMode) {
   case 1:
     curtain.write(180);
     break;
@@ -17,5 +17,6 @@ void SetCurtainActuatorStatus(JsonPairConst json) {
     curtain.write(0);
     break;
   }
-  LogUpdate("Curtain mode", "updated to", String(curtainActuatorState.mode).c_str(), "");
+  LogUpdate("Curtain mode", "updated to", String(newMode).c_str(), "");
+  curtainActuatorState.mode = newMode;
 }

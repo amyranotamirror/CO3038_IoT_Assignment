@@ -26,6 +26,7 @@ void TaskBuzzer(void *pvParameters){
 }
 
 void BuzzerCO2DetectedControl(const JsonVariantConst& variant) {
-    buzzerState.status = variant["CO2Detected"].as<bool>();
-    LogUpdate("Buzzer status", "updated to", String(buzzerState.status).c_str(), "");
+    bool newStatus = variant["CO2Detected"].as<bool>();
+    LogUpdate("Buzzer status", "updated to", String(newStatus).c_str(), "");
+    buzzerState.status = newStatus;
 }

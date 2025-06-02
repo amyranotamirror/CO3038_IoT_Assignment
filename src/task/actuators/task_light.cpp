@@ -8,8 +8,8 @@ void InitLight() {
 }
 
 void SetLightActuatorStatus(JsonPairConst json) {
-  lightActuatorState.mode = json.value().as<uint8_t>();
-  switch (lightActuatorState.mode) {
+  uint8_t newMode = json.value().as<uint8_t>();
+  switch (newMode) {
   case 1:
     digitalWrite(ActuatorConfig::lightPin0, ON);
     digitalWrite(ActuatorConfig::lightPin1, OFF);
@@ -27,5 +27,6 @@ void SetLightActuatorStatus(JsonPairConst json) {
     digitalWrite(ActuatorConfig::lightPin1, OFF);
     break;
   }
-  LogUpdate("Light mode", "updated to", String(lightActuatorState.mode).c_str(), "");
+  LogUpdate("Light mode", "updated to", String(newMode).c_str(), "");
+  lightActuatorState.mode = newMode;
 }

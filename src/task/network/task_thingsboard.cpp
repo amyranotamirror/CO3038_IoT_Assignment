@@ -33,47 +33,52 @@ void TaskThingsBoard(void *pvParameters) {
         thingsBoardState.connectionAttempts = 0;
         // RPC
         if (!thingsBoardState.isServerRPC) {
-          thingsBoardState.isServerRPC = server_rpc.RPC_Subscribe(rpc_callbacks.cbegin(), rpc_callbacks.cend());
-          if (thingsBoardState.isServerRPC) {
+          bool newIsServerRPC = server_rpc.RPC_Subscribe(rpc_callbacks.cbegin(), rpc_callbacks.cend());
+          if (newIsServerRPC) {
             LogSuccess("Server RPC", "subscribed successfully");
           } else {
             LogError("Server RPC", "can not subscribed");
           }
+          thingsBoardState.isServerRPC = newIsServerRPC;
         }
         // Shared attributes
         if (!thingsBoardState.isSharedAttributesUpdated) {
-          thingsBoardState.isSharedAttributesUpdated = attr_update.Shared_Attributes_Subscribe(shared_attribute_callback);
-          if (thingsBoardState.isSharedAttributesUpdated) {
+          bool newIsSharedAttributesUpdated = attr_update.Shared_Attributes_Subscribe(shared_attribute_callback);
+          if (newIsSharedAttributesUpdated) {
             LogSuccess("Shared attributes", "updated successfully");
           } else {
             LogError("Shared attributes", "can not updated");
           }
+          thingsBoardState.isSharedAttributesUpdated = newIsSharedAttributesUpdated;
         }
         if (!thingsBoardState.isSharedAttributesRequested) {
-          thingsBoardState.isSharedAttributesRequested = attr_request.Shared_Attributes_Request(attribute_request_callback);
-          if (thingsBoardState.isSharedAttributesRequested) {
+          bool newIsSharedAttributesRequested = attr_request.Shared_Attributes_Request(attribute_request_callback);
+          if (newIsSharedAttributesRequested) {
             LogSuccess("Shared attributes", "requested successfully");
           } else {
             LogError("Shared attributes", "can not requested");
           }
+          thingsBoardState.isSharedAttributesRequested = newIsSharedAttributesRequested;
         }
         // OTA
         if (thingsBoardState.isSharedAttributesRequestProcessed) {
           if (!thingsBoardState.isOTACurrentFirmwareSent) {
-            thingsBoardState.isOTACurrentFirmwareSent = ota.Firmware_Send_Info(OTAConfig::title, OTAConfig::version);
-            if (thingsBoardState.isOTACurrentFirmwareSent) {
+            bool newIsOTACurrentFirmwareSent = ota.Firmware_Send_Info(OTAConfig::title, OTAConfig::version);
+            if (newIsOTACurrentFirmwareSent) {
               LogSuccess("OTA current firmware", "sent successfully");
             } else {
               LogError("OTA current firmware", "can not sent");
             }
+            thingsBoardState.isOTACurrentFirmwareSent = newIsOTACurrentFirmwareSent;
           }
           if (!thingsBoardState.isOTAUpdateRequestSent) {
-            thingsBoardState.isOTAUpdateRequestSent = ota.Subscribe_Firmware_Update(ota_update_callback);
-            if (thingsBoardState.isOTAUpdateRequestSent) {
+            bool newIsOTAUpdateRequestSent = ota.Subscribe_Firmware_Update(ota_update_callback);
+            if (newIsOTAUpdateRequestSent) {
               LogSuccess("OTA update request", "sent successfully");
             } else {
               LogError("OTA update request", "can not sent");
             }
+            thingsBoardState.isOTAUpdateRequestSent = newIsOTAUpdateRequestSent;
           }
         }
       } else {
