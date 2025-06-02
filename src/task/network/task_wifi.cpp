@@ -5,7 +5,7 @@ WiFiClient wifiClient;
 void InitWiFi() {
   WiFi.mode(WIFI_STA);
   WiFi.setAutoReconnect(false);
-  LogInfo("WiFi", "Initialized in STA mode.");
+  LogInfo("WiFi", "Initialized in STA mode");
 }
 
 void TaskWiFi(void *pvParameters) {
@@ -13,7 +13,6 @@ void TaskWiFi(void *pvParameters) {
     if (WiFi.status() == WL_CONNECTED) {
       // Connection was established
       if (!wifiState.isConnected) {
-        Serial.println();
         LogInfo("WiFi", "Established connection");
         LogInfo("IP address", WiFi.localIP().toString().c_str());
       }
@@ -33,7 +32,7 @@ void TaskWiFi(void *pvParameters) {
       } else {
         wifiState.connectionAttempts++;
         if (wifiState.connectionAttempts >= WiFiConfig::maxConnectionAttempt) {
-          LogError("WiFi", "Failed to connect. Maximum connection attempts reached.");
+          LogError("WiFi", "Failed to connect after max attempts");
           WiFi.disconnect();
           wifiState.isAttempting = false;
         }

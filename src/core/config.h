@@ -14,11 +14,11 @@ struct SystemConfig {
 };
 struct WiFiConfig {
     // Amyra 2.4GHz WiFi
-    static constexpr const char* wifiSSID = "AMYRANGUYEN 2995";
-    static constexpr const char* wifiPassword = "@s0T5278";
+    // static constexpr const char* wifiSSID = "AMYRANGUYEN 2995";
+    // static constexpr const char* wifiPassword = "@s0T5278";
     // Harw 2.4GHz WiFi
-    // static constexpr const char* wifiSSID = "Harw";
-    // static constexpr const char* wifiPassword = "baohan1107";
+    static constexpr const char* wifiSSID = "Harw";
+    static constexpr const char* wifiPassword = "baohan1107";
 
     static constexpr uint16_t maxConnectionAttempt = 20U;
     //Timing
@@ -69,10 +69,10 @@ struct SensorConfig {
     static constexpr const char* motionKey = "motion";
     static constexpr const char* co2Key = "co2";
 
-    static constexpr uint16_t maxConnectionAttemptDHT22 = 20U;
-    static constexpr uint16_t maxConnectionAttemptLD2410 = 20U;
-    static constexpr uint16_t maxConnectionAttemptBH1750 = 20U;
-    static constexpr uint16_t maxConnectionAttemptMQ135 = 20U;
+    static constexpr uint16_t maxConnectionAttemptDHT22 = 5U;
+    static constexpr uint16_t maxConnectionAttemptLD2410 = 5U;
+    static constexpr uint16_t maxConnectionAttemptBH1750 = 5U;
+    static constexpr uint16_t maxConnectionAttemptMQ135 = 5U;
     // Timing
     static constexpr uint32_t readDHT22Interval = SystemConfig::defaultTaskDelay * 5;
     static constexpr uint32_t readLD2410Interval = SystemConfig::defaultTaskDelay * 5;
@@ -84,7 +84,7 @@ struct SensorConfig {
     static constexpr uint32_t connectAttemptBH1750Interval = SystemConfig::defaultTaskDelay;
     static constexpr uint32_t connectAttemptMQ135Interval = SystemConfig::defaultTaskDelay;
 
-    static constexpr gpio_num_t DHT20Pin = GPIO_NUM_27
+    static constexpr gpio_num_t DHT20Pin = GPIO_NUM_14
     ;
 };
 

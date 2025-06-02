@@ -8,6 +8,7 @@
 
 extern BH1750 lightSensor;
 
+// void InitLightSensorMutex();
 void InitLightSensor();
 void TaskLightSensor(void *pvParameters);
 

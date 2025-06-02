@@ -10,7 +10,7 @@ void InitTempHumidSensor() {
   // Initialize the temperature humidity sensor mutex
   tempHumidSensorState.mutex = xSemaphoreCreateMutex();
   if (tempHumidSensorState.mutex == nullptr) {
-    LogError("Temperature Humidity Sensor", "Failed to create mutex.");
+    LogError("Temperature Humidity Sensor", "Failed to create mutex");
     return;
   }
 
@@ -18,7 +18,7 @@ void InitTempHumidSensor() {
   tempHumidSensorState.connectionAttempt = 0;
   tempHumidSensorState.temperature = NAN;
   tempHumidSensorState.humidity = NAN;
-  LogSuccess("Temperature Humidity Sensor", "Initialized successfully.");
+  LogSuccess("Temperature Humidity Sensor", "Initialized successfully");
 }
 
 void TaskTempHumidSensor(void *pvParameters) {

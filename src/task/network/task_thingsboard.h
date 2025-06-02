@@ -4,12 +4,10 @@
 #include <Arduino_MQTT_Client.h>
 #include <Attribute_Request.h>
 #include <Client_Side_RPC.h>
-#include <HardwareSerial.h>
 #include <OTA_Firmware_Update.h>
 #include <Server_Side_RPC.h>
 #include <Shared_Attribute_Update.h>
 #include <ThingsBoard.h>
-#include <WiFi.h>
 
 #include "task_ota.h"
 #include "task_rpc.h"

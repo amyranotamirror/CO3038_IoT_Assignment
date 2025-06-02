@@ -30,6 +30,7 @@ struct AirQualitySensorState {
     double co2;
 };
 struct LightSensorState {
+    bool isConnected;
     volatile SemaphoreHandle_t mutex;
     uint16_t connectionAttempt;         // Refer SensorConfig::maxConnectionAttemptBH1750
     double brightness;
