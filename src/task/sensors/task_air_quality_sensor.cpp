@@ -34,25 +34,31 @@ void TaskAirQualitySensor(void *pvParameters) {
       }
       if (airQualitySensorState.isConnected) {
         // Read the air quality level
-        TakeMutex(tempHumidSensorState.mutex, SystemConfig::mutexWaitTicks, "Temperature humidity sensor");
-        double newCo2 = airQualitySensor.getCorrectedPPM(tempHumidSensorState.temperature, tempHumidSensorState.humidity);
-        GiveMutex(tempHumidSensorState.mutex, "Temperature humidity sensor");
+        double newTemperature = NAN;
+        double newHumidity = NAN;
+        if (TakeMutex(tempHumidSensorState.mutex, SystemConfig::mutexWaitTicks, "Temperature humidity sensor")) {
+          newTemperature = tempHumidSensorState.temperature;
+          newHumidity = tempHumidSensorState.humidity;
+          GiveMutex(tempHumidSensorState.mutex, "Temperature humidity sensor");
+        }
+        double newCo2 = airQualitySensor.getCorrectedPPM(newTemperature, newHumidity);
         LogRead(SensorConfig::co2Key, String(newCo2, 4).c_str(), "ppm");
         // Save read value
-        TakeMutex(airQualitySensorState.mutex, SystemConfig::mutexWaitTicks, "Air quality sensor");
-        if (newCo2 < 0 || isnan(newCo2)) {
-          if (airQualitySensorState.connectionAttempt < SensorConfig::maxConnectionAttemptMQ135) {
-            airQualitySensorState.connectionAttempt ++;
-            LogWarn("Air quality sensor", "measurement failed, retrying ...");
+        if (TakeMutex(airQualitySensorState.mutex, SystemConfig::mutexWaitTicks, "Air quality sensor")) {
+          if (newCo2 < 0 || isnan(newCo2)) {
+            if (airQualitySensorState.connectionAttempt < SensorConfig::maxConnectionAttemptMQ135) {
+              airQualitySensorState.connectionAttempt ++;
+              LogWarn("Air quality sensor", "measurement failed, retrying ...");
+            } else {
+              airQualitySensorState.isConnected = false;
+              LogError("Air quality sensor", "failed to read after max attempts");
+            }
           } else {
-            airQualitySensorState.isConnected = false;
-            LogError("Air quality sensor", "failed to read after max attempts");
+            airQualitySensorState.connectionAttempt = 0;
           }
-        } else {
-          airQualitySensorState.connectionAttempt = 0;
+          airQualitySensorState.co2 = newCo2;
+          GiveMutex(airQualitySensorState.mutex, "Air quality sensor");
         }
-        airQualitySensorState.co2 = newCo2;
-        GiveMutex(airQualitySensorState.mutex, "Air quality sensor");
       }
       vTaskDelay(SensorConfig::readMQ135Interval); // Use normal interval for next read
     }

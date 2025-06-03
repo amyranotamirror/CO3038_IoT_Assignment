@@ -12,8 +12,8 @@ struct SystemConfig {
     static constexpr gpio_num_t sclPin = GPIO_NUM_22;
     // Devices
     static constexpr uint32_t serialDebugBaud = 9600U;
-    static constexpr uint32_t serialMotionSensorBaud = 256000U;
-    static constexpr uint32_t serialMotionSensorConfig = SERIAL_8N1;
+    static constexpr uint32_t serialPresenceSensorBaud = 256000U;
+    static constexpr uint32_t serialPresenceSensorConfig = SERIAL_8N1;
     static constexpr uint8_t analogAirQualityResolution = 10;
     // Timing
     static constexpr uint32_t tinyTaskDelay = 10U;
@@ -79,7 +79,8 @@ struct SensorConfig {
     static constexpr const char* temperatureKey = "temperature";
     static constexpr const char* humidityKey = "humidity";
     static constexpr const char* brightnessKey = "brightness";
-    static constexpr const char* motionKey = "motion";
+    static constexpr const char* presenceKey = "presence";
+    static constexpr const char* distanceKey = "distance";
     static constexpr const char* co2Key = "co2";
 
     static constexpr uint16_t maxConnectionAttemptDHT22 = 5U;

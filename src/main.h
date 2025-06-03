@@ -21,7 +21,7 @@
 
 #include "task/sensors/task_air_quality_sensor.h"
 #include "task/sensors/task_light_sensor.h"
-#include "task/sensors/task_motion_sensor.h"
+#include "task/sensors/task_presence_sensor.h"
 #include "task/sensors/task_temp_humid_sensor.h"
 
 #endif

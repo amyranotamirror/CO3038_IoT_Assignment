@@ -56,7 +56,11 @@ void LogUpdate(const char* tag, const char* message, const char* value, const ch
 
 void LogRead(const char* key, const char* value, const char* unit) {
     char buffer[128 + strlen(key) + strlen(value) + strlen(unit)];
-    snprintf(buffer, sizeof(buffer), "[READ] %s = %s %s\n", key, value, unit);
+    if (unit == "") {
+        snprintf(buffer, sizeof(buffer), "[READ] %s = %s\n", key, value);
+    } else {
+        snprintf(buffer, sizeof(buffer), "[READ] %s = %s %s\n", key, value, unit);
+    }
     Serial.print(buffer);
 }
 

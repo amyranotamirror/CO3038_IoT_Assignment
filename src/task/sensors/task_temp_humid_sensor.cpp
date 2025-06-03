@@ -41,21 +41,22 @@ void TaskTempHumidSensor(void *pvParameters) {
         LogRead(SensorConfig::temperatureKey, String(newTemperature, 4).c_str(), "°C");
         LogRead(SensorConfig::humidityKey, String(newHumidity, 4).c_str(), "%");
         // Save read value
-        TakeMutex(tempHumidSensorState.mutex, SystemConfig::mutexWaitTicks, "Temperature humidity sensor");
-        if (newTemperature < 0 || newHumidity < 0 || isnan(newTemperature) || isnan(newHumidity)) {
-          if (tempHumidSensorState.connectionAttempt < SensorConfig::maxConnectionAttemptDHT22) {
-            tempHumidSensorState.connectionAttempt ++;
-            LogWarn("Temperature humidity sensor", "measurement failed, retrying ...");
+        if (TakeMutex(tempHumidSensorState.mutex, SystemConfig::mutexWaitTicks, "Temperature humidity sensor")) {
+          if (newTemperature < 0 || newHumidity < 0 || isnan(newTemperature) || isnan(newHumidity)) {
+            if (tempHumidSensorState.connectionAttempt < SensorConfig::maxConnectionAttemptDHT22) {
+              tempHumidSensorState.connectionAttempt ++;
+              LogWarn("Temperature humidity sensor", "measurement failed, retrying ...");
+            } else {
+              tempHumidSensorState.isConnected = false;
+              LogError("Temperature humidity sensor", "failed to read after max attempts");
+            }
           } else {
-            tempHumidSensorState.isConnected = false;
-            LogError("Temperature humidity sensor", "failed to read after max attempts");
+            tempHumidSensorState.connectionAttempt = 0;
           }
-        } else {
-          tempHumidSensorState.connectionAttempt = 0;
+          tempHumidSensorState.temperature = newTemperature;
+          tempHumidSensorState.humidity = newHumidity;
+          GiveMutex(tempHumidSensorState.mutex, "Temperature humidity sensor");
         }
-        tempHumidSensorState.temperature = newTemperature;
-        tempHumidSensorState.humidity = newHumidity;
-        GiveMutex(tempHumidSensorState.mutex, "Temperature humidity sensor");
       }
       vTaskDelay(SensorConfig::readDHT22Interval); // Use normal interval for next read
     }

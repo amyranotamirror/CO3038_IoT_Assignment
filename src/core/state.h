@@ -37,9 +37,12 @@ struct LightSensorState {
     uint16_t connectionAttempt;         // Refer SensorConfig::maxConnectionAttemptBH1750
     double brightness;
 };
-struct MotionSensorState {
+struct PresenceSensorState {
+    bool isConnected;
+    volatile SemaphoreHandle_t mutex;
     uint16_t connectionAttempt;         // Refer SensorConfig::maxConnectionAttemptLD2410
-    double motionDetected;
+    bool presence;
+    uint32_t distance;
 };
 struct TempHumidSensorState {
     bool isConnected;
@@ -69,7 +72,7 @@ extern volatile ThingsBoardState thingsBoardState;
 extern volatile TempHumidSensorState tempHumidSensorState;
 extern volatile AirQualitySensorState airQualitySensorState;
 extern volatile LightSensorState lightSensorState;
-extern volatile MotionSensorState motionSensorState;
+extern volatile PresenceSensorState presenceSensorState;
 
 extern volatile LightActuatorState lightActuatorState;
 extern volatile CurtainActuatorState curtainActuatorState;

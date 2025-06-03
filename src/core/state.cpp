@@ -5,7 +5,7 @@ volatile ThingsBoardState thingsBoardState = {false, false, 0, false, false, fal
 
 volatile AirQualitySensorState airQualitySensorState = {false, nullptr, 0, NAN};
 volatile LightSensorState lightSensorState = {false, nullptr, 0, NAN};
-volatile MotionSensorState motionSensorState = {0, NAN};
+volatile PresenceSensorState presenceSensorState = {false, nullptr, 0, false, 0};
 volatile TempHumidSensorState tempHumidSensorState = {false, nullptr, 0, NAN, NAN};
 
 volatile LightActuatorState lightActuatorState = {0};

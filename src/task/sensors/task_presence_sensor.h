@@ -7,9 +7,9 @@
 #include "./core/state.h"
 #include "./core/utils.h"
 
-extern MQ135 airQualitySensor;
+extern MyLD2410 presenceSensor;
 
-void InitMotionSensor();
-void TaskMotionSensor(void *pvParameters);
+void InitPresenceSensor();
+void TaskPresenceSensor(void *pvParameters);
 
 #endif

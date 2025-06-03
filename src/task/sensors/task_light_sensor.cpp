@@ -41,20 +41,21 @@ void TaskLightSensor(void *pvParameters) {
         double newBrightness = lightSensor.readLightLevel();
         LogRead(SensorConfig::brightnessKey, String(newBrightness, 4).c_str(), "lux");
         // Save read value
-        TakeMutex(lightSensorState.mutex, SystemConfig::mutexWaitTicks, "Light sensor");
-        if (newBrightness < 0 || isnan(newBrightness)) {
-          if (lightSensorState.connectionAttempt < SensorConfig::maxConnectionAttemptBH1750) {
-            lightSensorState.connectionAttempt ++;
-            LogWarn("Light sensor", "measurement failed, retrying ...");
+        if (TakeMutex(lightSensorState.mutex, SystemConfig::mutexWaitTicks, "Light sensor")) {
+          if (newBrightness < 0 || isnan(newBrightness)) {
+            if (lightSensorState.connectionAttempt < SensorConfig::maxConnectionAttemptBH1750) {
+              lightSensorState.connectionAttempt ++;
+              LogWarn("Light sensor", "measurement failed, retrying ...");
+            } else {
+              lightSensorState.isConnected = false;
+              LogError("Light sensor", "failed to read after max attempts");
+            }
           } else {
-            lightSensorState.isConnected = false;
-            LogError("Light sensor", "failed to read after max attempts");
+            lightSensorState.connectionAttempt = 0;
           }
-        } else {
-          lightSensorState.connectionAttempt = 0;
+          lightSensorState.brightness = newBrightness;
+          GiveMutex(lightSensorState.mutex, "Light sensor");
         }
-        lightSensorState.brightness = newBrightness;
-        GiveMutex(lightSensorState.mutex, "Light sensor");
       }
       vTaskDelay(SensorConfig::readBH1750Interval); // Use normal interval for next read
     }
