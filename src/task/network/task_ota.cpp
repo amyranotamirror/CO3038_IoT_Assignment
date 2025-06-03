@@ -15,5 +15,5 @@ void FinishedCallback(const bool &success) {
     }
 }
 void ProgressCallback(const size_t &current, const size_t &total) {
-    LogUpdate("OTA update", "progress", String(static_cast<float>(current * 100U) / total, 4).c_str(), "%");
+    LogUpdate("OTA update", "progress", String(static_cast<double>(current * 100U) / total, 4).c_str(), "%");
 }

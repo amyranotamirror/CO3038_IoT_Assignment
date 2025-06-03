@@ -8,6 +8,6 @@
 void InitAlert();
 void TaskAlert(void *pvParameters);
 
-void AlertCO2DetectedControl(const JsonVariantConst& variant);
+void AlertCo2DetectedControl(const JsonVariantConst& variant);
 
 #endif

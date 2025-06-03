@@ -14,8 +14,8 @@ void TaskAlert(void *pvParameters) {
   }
 }
 
-void AlertCO2DetectedControl(const JsonVariantConst& variant) {
-  bool newStatus = variant["CO2Detected"].as<bool>();
+void AlertCo2DetectedControl(const JsonVariantConst& variant) {
+  bool newStatus = variant["co2Detected"].as<bool>();
   LogUpdate("Alert status", "updated to", String(newStatus).c_str(), "");
   alertState.status = newStatus;
 }

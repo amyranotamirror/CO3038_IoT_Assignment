@@ -11,8 +11,8 @@ void processRPC(const JsonVariantConst& variant, JsonDocument& document) {
   char buffer[jsonSize];
   serializeJson(variant, buffer, jsonSize);
   LogInfo("RPC received", buffer);
-  if (variant.containsKey("CO2Detected")) {
-    BuzzerCO2DetectedControl(variant);
-    AlertCO2DetectedControl(variant);
+  if (variant.containsKey("co2Detected")) {
+    BuzzerCo2DetectedControl(variant);
+    AlertCo2DetectedControl(variant);
   }
 }

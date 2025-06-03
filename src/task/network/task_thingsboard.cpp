@@ -8,7 +8,7 @@ OTA_Firmware_Update<> ota;
 const std::array<IAPI_Implementation*, 5U> apis = {&client_rpc, &server_rpc, &attr_update, &attr_request, &ota};
 
 Arduino_MQTT_Client mqttClient(wifiClient);
-ThingsBoard thingsboard(mqttClient, MessageConfig::maxMessageReceiveSize, MessageConfig::maxMessageSendSize, Default_Max_Stack_Size, apis);
+ThingsBoard thingsboard(mqttClient, ThingsBoardConfig::maxMessageReceiveSize, ThingsBoardConfig::maxMessageSendSize, Default_Max_Stack_Size, apis);
 
 void TaskThingsBoard(void *pvParameters) {
   while (1) {

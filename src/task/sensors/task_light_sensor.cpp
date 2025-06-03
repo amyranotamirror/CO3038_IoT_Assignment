@@ -40,6 +40,7 @@ void TaskLightSensor(void *pvParameters) {
         // Read the light level
         double newBrightness = lightSensor.readLightLevel();
         LogRead(SensorConfig::brightnessKey, String(newBrightness, 4).c_str(), "lux");
+        // Save read value
         TakeMutex(lightSensorState.mutex, SystemConfig::mutexWaitTicks, "Light sensor");
         if (newBrightness < 0 || isnan(newBrightness)) {
           if (lightSensorState.connectionAttempt < SensorConfig::maxConnectionAttemptBH1750) {

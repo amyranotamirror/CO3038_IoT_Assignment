@@ -5,7 +5,7 @@ DHT tempHumidSensor;
 void InitTempHumidSensor() {
   // Initialize the temperature humidity sensor with default settings
   LogInfo("Temperature humidity sensor", "initializing ...");
-  tempHumidSensor.setup(SensorConfig::DHT20Pin);
+  tempHumidSensor.setup(SensorConfig::DHT22Pin);
 
   // Initialize the temperature humidity sensor mutex
   if (tempHumidSensorState.mutex == nullptr) {
@@ -40,6 +40,7 @@ void TaskTempHumidSensor(void *pvParameters) {
         double newHumidity = tempHumidSensor.getHumidity();
         LogRead(SensorConfig::temperatureKey, String(newTemperature, 4).c_str(), "°C");
         LogRead(SensorConfig::humidityKey, String(newHumidity, 4).c_str(), "%");
+        // Save read value
         TakeMutex(tempHumidSensorState.mutex, SystemConfig::mutexWaitTicks, "Temperature humidity sensor");
         if (newTemperature < 0 || newHumidity < 0 || isnan(newTemperature) || isnan(newHumidity)) {
           if (tempHumidSensorState.connectionAttempt < SensorConfig::maxConnectionAttemptDHT22) {

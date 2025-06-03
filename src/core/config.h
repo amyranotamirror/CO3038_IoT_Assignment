@@ -6,6 +6,7 @@
 
 struct SystemConfig {
     static constexpr uint32_t serialDebugBaud = 9600U;
+    static constexpr uint32_t serialMotionSensorBaud = 256000U;
     // Timing
     static constexpr uint32_t tinyTaskDelay = 10U;
     static constexpr uint32_t smallTaskDelay = 500U;
@@ -17,23 +18,21 @@ struct WiFiConfig {
     // static constexpr const char* wifiSSID = "AMYRANGUYEN 2995";
     // static constexpr const char* wifiPassword = "@s0T5278";
     // Harw 2.4GHz WiFi
-    static constexpr const char* wifiSSID = "Harw";
-    static constexpr const char* wifiPassword = "baohan1107";
+    // static constexpr const char* wifiSSID = "Harw";
+    // static constexpr const char* wifiPassword = "baohan1107";
+    static constexpr const char* wifiSSID = "MS HOUSE_ lau 2";
+    static constexpr const char* wifiPassword = "mshouse1";
 
     static constexpr uint16_t maxConnectionAttempt = 20U;
     //Timing
     static constexpr uint32_t reconnectInterval = SystemConfig::defaultTaskDelay * 5;
     static constexpr uint32_t connectionAttemptInterval = SystemConfig::smallTaskDelay;
 };
-struct MessageConfig {
-    static constexpr uint16_t maxMessageSendSize = 512U;
-    static constexpr uint16_t maxMessageReceiveSize = 512U;
-};
 
 struct ThingsBoardConfig {
     // Token
-    // static constexpr const char* token = "EUhiYO2k6GAw35PIHa0K"; // Training room 1
-    static constexpr const char* token = "aS2UTXnwxrgjfzSY4oRw"; // Training room 2
+    static constexpr const char* token = "EUhiYO2k6GAw35PIHa0K"; // Training room 1
+    // static constexpr const char* token = "aS2UTXnwxrgjfzSY4oRw"; // Training room 2
     // Server
     static constexpr const char* server = "app.coreiot.io";
     static constexpr uint16_t port = 1883U; 
@@ -41,6 +40,9 @@ struct ThingsBoardConfig {
     static constexpr uint16_t maxConnectionAttempt = 20U;
     static constexpr uint32_t reconnectInterval = SystemConfig::defaultTaskDelay * 5;
     static constexpr uint32_t connectionAttemptInterval = SystemConfig::smallTaskDelay;
+    // Message
+    static constexpr uint16_t maxMessageSendSize = 512U;
+    static constexpr uint16_t maxMessageReceiveSize = 512U;
 };
 struct TelemetryConfig {
     // Timing
@@ -63,6 +65,11 @@ struct OTAConfig {
 };
 
 struct SensorConfig {
+    static constexpr gpio_num_t DHT22Pin = GPIO_NUM_14;
+    static constexpr gpio_num_t MQ135Pin = GPIO_NUM_34;
+    static constexpr double MQ135RZero = 190.0;
+    static constexpr double MQ135RLoad = 36.0;
+
     static constexpr const char* temperatureKey = "temperature";
     static constexpr const char* humidityKey = "humidity";
     static constexpr const char* brightnessKey = "brightness";
@@ -78,22 +85,9 @@ struct SensorConfig {
     static constexpr uint32_t readLD2410Interval = SystemConfig::defaultTaskDelay * 5;
     static constexpr uint32_t readBH1750Interval = SystemConfig::defaultTaskDelay * 5;
     static constexpr uint32_t readMQ135Interval = SystemConfig::defaultTaskDelay * 5;
-
-    static constexpr uint32_t connectAttemptDHT22Interval = SystemConfig::defaultTaskDelay;
-    static constexpr uint32_t connectAttemptLD2410Interval = SystemConfig::defaultTaskDelay;
-    static constexpr uint32_t connectAttemptBH1750Interval = SystemConfig::defaultTaskDelay;
-    static constexpr uint32_t connectAttemptMQ135Interval = SystemConfig::defaultTaskDelay;
-
-    static constexpr gpio_num_t DHT20Pin = GPIO_NUM_14
-    ;
 };
 
 struct ActuatorConfig {
-    static constexpr const char* lightingKey = "lighting";
-    static constexpr const char* curtainKey = "curtain";
-    static constexpr const char* buzzerKey = "buzzer";
-    static constexpr const char* indicatorLightKey = "indicator";
-
     static constexpr gpio_num_t lightPin0 = GPIO_NUM_18;
     static constexpr gpio_num_t lightPin1 = GPIO_NUM_19;
     static constexpr gpio_num_t curtainPin = GPIO_NUM_23;

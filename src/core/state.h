@@ -26,7 +26,9 @@ struct ThingsBoardState {
 };
 
 struct AirQualitySensorState {
-    uint16_t connectionAttempt;         // Refer SensorConfig::maxConnectionAttemptMHZ19
+    bool isConnected;
+    volatile SemaphoreHandle_t mutex;
+    uint16_t connectionAttempt;         // Refer SensorConfig::maxConnectionAttemptMQ135
     double co2;
 };
 struct LightSensorState {
@@ -36,13 +38,13 @@ struct LightSensorState {
     double brightness;
 };
 struct MotionSensorState {
-    uint16_t connectionAttempt;        // Refer SensorConfig::maxConnectionAttemptLD2410
+    uint16_t connectionAttempt;         // Refer SensorConfig::maxConnectionAttemptLD2410
     double motionDetected;
 };
 struct TempHumidSensorState {
     bool isConnected;
     volatile SemaphoreHandle_t mutex;
-    uint16_t connectionAttempt;        // Refer SensorConfig::maxConnectionAttemptDHT22
+    uint16_t connectionAttempt;         // Refer SensorConfig::maxConnectionAttemptDHT22
     double temperature;
     double humidity;
 };

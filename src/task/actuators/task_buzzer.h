@@ -10,7 +10,7 @@
 void InitBuzzer();
 void TaskBuzzer(void *pvParameters);
 
-void BuzzerCO2DetectedControl(const JsonVariantConst& variant);
+void BuzzerCo2DetectedControl(const JsonVariantConst& variant);
 
 extern Buzzer::Melody_t melody;
 extern Buzzer buzzer;

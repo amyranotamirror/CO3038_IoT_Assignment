@@ -22,6 +22,13 @@ void TaskTelemetry(void *pvParameters) {
         GiveMutex(tempHumidSensorState.mutex, "Temperature humidity sensor");
       }
     }
+    if (TakeMutex(airQualitySensorState.mutex, SystemConfig::mutexWaitTicks, "Air quality sensor")) {
+        if (airQualitySensorState.co2 >= 0 && !isnan(airQualitySensorState.co2)) {
+          thingsboard.sendTelemetryData(SensorConfig::co2Key, airQualitySensorState.co2);
+          LogSend(SensorConfig::co2Key, String(airQualitySensorState.co2, 4).c_str());
+        }
+        GiveMutex(airQualitySensorState.mutex, "Air quality");
+    }
     vTaskDelay(TelemetryConfig::sendInterval);
   }
 }
