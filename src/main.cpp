@@ -4,44 +4,13 @@
 MyLD2410 motion(Serial2);
 void TaskTest(void *pvParameters) {
   while(1) {
-    // bool presenceDetected = motion.presenceDetected();
-    // bool movingDetected = motion.movingTargetDetected();
-    // bool stationaryDetected = motion.stationaryTargetDetected();
-    // uint16_t movingDistance = motion.movingTargetDistance();
-    // uint16_t stationaryDistance = motion.stationaryTargetDistance();
-    // LogRead("presenceDetected", String(presenceDetected).c_str(), "");
-    // LogRead("movingDetected", String(movingDetected).c_str(), "");
-    // LogRead("stationaryDetected", String(stationaryDetected).c_str(), "");
-    // LogRead("movingDistance", String(movingDistance).c_str(), "");
-    // LogRead("stationaryDistance", String(stationaryDistance).c_str(), "");
-
     motion.check();
     Serial.println(motion.statusString());
-    // if (motion.presenceDetected()) {
-      Serial.print(motion.presenceDetected() ? "presence" : " no thing presence");
-      Serial.print(", distance: ");
-      Serial.print(motion.detectedDistance());
-      Serial.print("cm");
-      Serial.println();
-    // }
-    // if (motion.movingTargetDetected()) {
-      Serial.print(motion.movingTargetDetected() ? "moving" : " no thing moving");
-      Serial.print(" MOVING    = ");
-      Serial.print(motion.movingTargetSignal());
-      Serial.print("@");
-      Serial.print(motion.movingTargetDistance());
-      Serial.print("cm ");
-      Serial.println();
-    // }
-    // if (motion.stationaryTargetDetected()) {
-      Serial.print(motion.stationaryTargetDetected() ? "stationary" : " no thing stationary");
-      Serial.print(" STATIONARY= ");
-      Serial.print(motion.stationaryTargetSignal());
-      Serial.print("@");
-      Serial.print(motion.stationaryTargetDistance());
-      Serial.print("cm ");
-      Serial.println();
-    // }
+    
+    Serial.print(motion.presenceDetected() ? "presence" : " no thing presence");
+    Serial.print(", distance: ");
+    Serial.print(motion.detectedDistance());
+    Serial.print("cm");
     Serial.println();
 
     vTaskDelay(SystemConfig::defaultTaskDelay * 5);
@@ -50,9 +19,9 @@ void TaskTest(void *pvParameters) {
 
 void InitSystem() {
   Serial.begin(SystemConfig::serialDebugBaud); // Initialize serial communication for debugging via the serial monitor
-  Serial2.begin(256000U, SERIAL_8N1, GPIO_NUM_16, GPIO_NUM_17); // Initialize serial communication for motion sensor
-  Wire.begin(GPIO_NUM_21, GPIO_NUM_22); // Initialize i2c communication for light sensor
-  analogReadResolution(10); // Reconfigure adc resolution for air quality sensor
+  Serial2.begin(SystemConfig::serialMotionSensorBaud, SystemConfig::serialMotionSensorConfig, SystemConfig::serial2RxPin, SystemConfig::serial2TxPin); // Initialize serial communication for motion sensor
+  Wire.begin(SystemConfig::sdaPin, SystemConfig::sclPin); // Initialize i2c communication for light sensor
+  analogReadResolution(SystemConfig::analogAirQualityResolution); // Reconfigure adc resolution for air quality sensor
 }
 
 void InitDevices() {

@@ -5,8 +5,16 @@
 #include <cstdint>
 
 struct SystemConfig {
+    // Board
+    static constexpr gpio_num_t serial2RxPin = GPIO_NUM_16;
+    static constexpr gpio_num_t serial2TxPin = GPIO_NUM_17;
+    static constexpr gpio_num_t sdaPin = GPIO_NUM_21;
+    static constexpr gpio_num_t sclPin = GPIO_NUM_22;
+    // Devices
     static constexpr uint32_t serialDebugBaud = 9600U;
     static constexpr uint32_t serialMotionSensorBaud = 256000U;
+    static constexpr uint32_t serialMotionSensorConfig = SERIAL_8N1;
+    static constexpr uint8_t analogAirQualityResolution = 10;
     // Timing
     static constexpr uint32_t tinyTaskDelay = 10U;
     static constexpr uint32_t smallTaskDelay = 500U;
@@ -18,10 +26,8 @@ struct WiFiConfig {
     // static constexpr const char* wifiSSID = "AMYRANGUYEN 2995";
     // static constexpr const char* wifiPassword = "@s0T5278";
     // Harw 2.4GHz WiFi
-    // static constexpr const char* wifiSSID = "Harw";
-    // static constexpr const char* wifiPassword = "baohan1107";
-    static constexpr const char* wifiSSID = "MS HOUSE_ lau 2";
-    static constexpr const char* wifiPassword = "mshouse1";
+    static constexpr const char* wifiSSID = "Harw";
+    static constexpr const char* wifiPassword = "baohan1107";
 
     static constexpr uint16_t maxConnectionAttempt = 20U;
     //Timing
