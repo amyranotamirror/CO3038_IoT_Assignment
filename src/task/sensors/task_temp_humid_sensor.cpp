@@ -6,6 +6,10 @@ void InitTempHumidSensor() {
   // Initialize the temperature humidity sensor with default settings
   LogInfo("Temperature humidity sensor", "initializing ...");
   tempHumidSensor.setup(SensorConfig::DHT22Pin);
+  if (isnan(tempHumidSensor.getTemperature())) {
+    LogError("Temperature humidity sensor", "failed to initialize");
+    return;
+  }
 
   // Initialize the temperature humidity sensor mutex
   if (tempHumidSensorState.mutex == nullptr) {
