@@ -54,6 +54,8 @@ struct TempHumidSensorState {
 
 struct LightActuatorState {
     uint8_t mode;
+    bool isWhiteMode;
+    bool isWarmMode;
 };
 struct CurtainActuatorState {
     uint8_t mode;

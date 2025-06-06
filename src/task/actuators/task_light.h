@@ -10,5 +10,7 @@ void InitLight();
 
 // Shared attributes for toggling light
 void SetLightActuatorStatus(JsonPairConst json);
+void SetLightActuatorWhiteStatus(JsonPairConst json);
+void SetLightActuatorWarmStatus(JsonPairConst json);
 
 #endif

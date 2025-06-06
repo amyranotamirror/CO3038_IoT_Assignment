@@ -11,8 +11,10 @@ void processSharedAttributes(const JsonObjectConst &data) {
   for (auto it = data.begin(); it != data.end(); ++ it) {
     if (strcmp(it->key().c_str(), "curtainActuatorMode") == 0) {
       SetCurtainActuatorStatus(*it);
-    } else if (strcmp(it->key().c_str(), "lightActuatorMode") == 0) {
-      SetLightActuatorStatus(*it);
+    } else if (strcmp(it->key().c_str(), "lightActuatorWhite") == 0) {
+      SetLightActuatorWhiteStatus(*it);
+    } else if (strcmp(it->key().c_str(), "lightActuatorWarm") == 0) {
+      SetLightActuatorWarmStatus(*it);
     }
   }
 }

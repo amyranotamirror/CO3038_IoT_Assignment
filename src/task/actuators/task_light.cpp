@@ -32,3 +32,25 @@ void SetLightActuatorStatus(JsonPairConst json) {
   LogUpdate("Light mode", "updated to", String(newMode).c_str(), "");
   lightActuatorState.mode = newMode;
 }
+
+void SetLightActuatorWhiteStatus(JsonPairConst json) {
+  uint8_t newMode = json.value().as<bool>();
+  if (newMode) {
+    digitalWrite(ActuatorConfig::lightPin0, ON);
+  } else {
+    digitalWrite(ActuatorConfig::lightPin0, OFF);
+  }
+  LogUpdate("Light white mode", "updated to", String(newMode).c_str(), "");
+  lightActuatorState.isWhiteMode = newMode;
+}
+
+void SetLightActuatorWarmStatus(JsonPairConst json) {
+  uint8_t newMode = json.value().as<bool>();
+  if (newMode) {
+    digitalWrite(ActuatorConfig::lightPin1, ON);
+  } else {
+    digitalWrite(ActuatorConfig::lightPin1, OFF);
+  }
+  LogUpdate("Light warm mode", "updated to", String(newMode).c_str(), "");
+  lightActuatorState.isWarmMode = newMode;
+}

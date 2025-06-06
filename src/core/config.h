@@ -58,7 +58,7 @@ struct RPCAttributeConfig {
     static constexpr uint8_t MaxRPC = 0U;
     static constexpr uint8_t MaxRequestRPC = 2U;
     static constexpr uint8_t MaxSubscription = 1U;
-    static constexpr uint8_t maxAttribute = 2U;
+    static constexpr uint8_t maxAttribute = 4U;
     static constexpr uint64_t requestTimeoutMicroseconds = 10000U * 1000U;
 };
 struct OTAConfig {

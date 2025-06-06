@@ -8,7 +8,7 @@ volatile LightSensorState lightSensorState = {false, nullptr, 0, NAN};
 volatile PresenceSensorState presenceSensorState = {false, nullptr, 0, false, 0};
 volatile TempHumidSensorState tempHumidSensorState = {false, nullptr, 0, NAN, NAN};
 
-volatile LightActuatorState lightActuatorState = {0};
+volatile LightActuatorState lightActuatorState = {0, false, false};
 volatile CurtainActuatorState curtainActuatorState = {0};
 
 volatile BuzzerState buzzerState = {OFF};
