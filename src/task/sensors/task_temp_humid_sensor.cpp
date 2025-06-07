@@ -62,7 +62,7 @@ void TaskTempHumidSensor(void *pvParameters) {
           GiveMutex(tempHumidSensorState.mutex, "Temperature humidity sensor");
         }
       }
-      vTaskDelay(SensorConfig::readDHT22Interval); // Use normal interval for next read
     }
+    vTaskDelay(SensorConfig::readDHT22Interval); // Use normal interval for next read
   }
 }

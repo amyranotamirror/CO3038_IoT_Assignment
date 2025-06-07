@@ -57,7 +57,7 @@ void TaskLightSensor(void *pvParameters) {
           GiveMutex(lightSensorState.mutex, "Light sensor");
         }
       }
-      vTaskDelay(SensorConfig::readBH1750Interval); // Use normal interval for next read
     }
+    vTaskDelay(SensorConfig::readBH1750Interval); // Use normal interval for next read
   }
 }

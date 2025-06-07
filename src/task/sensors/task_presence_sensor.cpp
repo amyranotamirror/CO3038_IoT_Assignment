@@ -62,7 +62,7 @@ void TaskPresenceSensor(void *pvParameters) {
           GiveMutex(presenceSensorState.mutex, "Presence sensor");
         }
       }
-      vTaskDelay(SensorConfig::readLD2410Interval); // Use normal interval for next read
     }
+    vTaskDelay(SensorConfig::readLD2410Interval); // Use normal interval for next read
   }
 }

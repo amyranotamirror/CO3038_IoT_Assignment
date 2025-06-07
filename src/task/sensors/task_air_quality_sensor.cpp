@@ -60,7 +60,7 @@ void TaskAirQualitySensor(void *pvParameters) {
           GiveMutex(airQualitySensorState.mutex, "Air quality sensor");
         }
       }
-      vTaskDelay(SensorConfig::readMQ135Interval); // Use normal interval for next read
     }
+    vTaskDelay(SensorConfig::readMQ135Interval); // Use normal interval for next read
   }
 }
